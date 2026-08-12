@@ -9,7 +9,6 @@
     "build": "vitepress build docs",
     "preview": "vitepress preview docs",
     "check:api": "bun run scripts/check-api.ts",
-    "check:chinese": "bun run scripts/check-chinese.ts",
     "check:responsive": "bun run scripts/check-responsive.ts"
   },
   "devDependencies": {
