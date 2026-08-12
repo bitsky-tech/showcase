@@ -1,5 +1,8 @@
 name: Deploy
 
+# Publishes what is on main. With main protected, the only way to get here is a
+# merged pull request, so this fires once per merge -- the pre-merge checks live in
+# ci.yml, which runs on the pull request itself.
 on:
   push:
     branches: [main]

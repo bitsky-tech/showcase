@@ -1,0 +1,40 @@
+name: CI
+
+# main is a protected branch, so every change reaches it through a pull request.
+# This workflow is the pre-merge gate; deploy.yml then publishes on the push that
+# the merge produces.
+#
+# Deliberately not a deploy: Pages serves one live site at showcase.bridgic.ai, so
+# building a PR head into it would put unreviewed content on the production domain
+# (and the two runs would queue behind each other on deploy.yml's `pages`
+# concurrency group). If per-PR preview URLs are wanted later, that needs a
+# separate host -- Pages has no preview environments.
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Unlike the deploy -- where cancelling a half-finished publish can leave a partial
+# tree -- a superseded validation run has no side effects, so cancel it.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+
+      # The same two gates deploy.yml runs, in the same order, so a PR cannot pass
+      # here and then fail after the merge:
+      #   check:api  -- the two languages drifting apart, or a `path` pointing at a
+      #                 page that does not exist
+      #   build      -- any broken internal link, since ignoreDeadLinks is false
+      - run: bun run check:api
+      - run: bun run build
