@@ -92,6 +92,21 @@ jobs:
           check /api/workflows.zh.json   200 application/json
           check /api/workflows.en.json   200 application/json
           check /assets/logo.svg         200 image/svg+xml
+
+          # Status codes alone cannot catch a base-path mismatch: the HTML still
+          # answers 200 while every /assets/... reference inside it 404s, leaving a
+          # blank page. Resolve one real asset reference out of the served HTML and
+          # fetch it.
+          asset=$(curl -s --max-time 20 "$base/zh/" | grep -oE '/assets/[^"]+\.(css|js)' | head -1)
+          if [ -z "$asset" ]; then
+            echo "  FAIL: no /assets reference found in /zh/ -- is the page rendering?"
+            fail=1
+          else
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$base$asset" || true)
+            printf '  %-30s %s  (referenced by /zh/)\n' "$asset" "$code"
+            [ "$code" = "200" ] || fail=1
+          fi
+
           exit $fail
 
       # The mirror caches @main for 12h (s-maxage=43200), which for API endpoints
