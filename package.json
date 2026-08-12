@@ -1,0 +1,26 @@
+{
+  "name": "bridgic-showcase",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Workflow showcase and data API for bridgic clients, served from showcase.bridgic.ai",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs",
+    "check:api": "bun run scripts/check-api.ts",
+    "check:chinese": "bun run scripts/check-chinese.ts",
+    "check:responsive": "bun run scripts/check-responsive.ts"
+  },
+  "devDependencies": {
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-mathjax3": "^5.2.0",
+    "mermaid": "^11.16.1",
+    "playwright": "^1.62.1",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "dependencies": {
+    "@fontsource/plus-jakarta-sans": "^5.3.0"
+  }
+}

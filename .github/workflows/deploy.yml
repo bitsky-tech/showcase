@@ -1,0 +1,115 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# pages:write + id-token:write are what deploy-pages needs. contents stays
+# read-only because nothing is ever pushed back to the repo.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time. cancel-in-progress is deliberately false: killing a
+# half-finished deploy can leave the site serving a partial tree.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+
+      # Before the build, not after: this catches the two languages drifting apart
+      # and `path` values pointing at pages that do not exist. Cheaper to fail here
+      # than to publish cards that 404 when clicked.
+      - run: bun run check:api
+
+      - run: bun run build
+
+      # NOTE: Pages must be enabled once by hand (Settings -> Pages -> Source:
+      # GitHub Actions). `enablement: true` does not work here -- GITHUB_TOKEN has
+      # no permission to create a Pages site, that needs repo admin.
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs/.vitepress/dist
+          # v5 tars with `--exclude=.[^/]*` unless this is on, which would
+          # silently drop .nojekyll from the published tree.
+          include-hidden-files: true
+
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+      # Verified from inside the runner on purpose: github.io is blocked on some
+      # networks (including the one this repo was authored from), so a curl from a
+      # dev machine cannot confirm what Pages actually serves. Checks content-type
+      # too -- a JSON route silently served as text/plain would break clients that
+      # branch on it.
+      - name: Smoke test the deployed site
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          base="${PAGE_URL%/}"
+          echo "Testing $base"
+
+          # deploy-pages returns before the CDN has finished propagating.
+          for i in $(seq 1 6); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$base/api/index.json" || true)
+            [ "$code" = "200" ] && break
+            echo "  waiting for propagation (attempt $i, got $code)"
+            sleep 10
+          done
+
+          fail=0
+          check() {
+            out=$(curl -sL -o /dev/null -w '%{http_code} %{content_type}' --max-time 20 "$base$1") || true
+            [ -n "$out" ] || out="000 -"
+            code=${out%% *}
+            type=${out#* }
+            verdict=ok
+            [ "$code" = "$2" ] || verdict=FAIL
+            case "$type" in "$3"*) ;; *) verdict=FAIL ;; esac
+            printf '  %-30s %s  %-34s %s\n' "$1" "$code" "$type" "$verdict"
+            [ "$verdict" = ok ] || fail=1
+          }
+
+          check /                        200 text/html
+          check /zh/                     200 text/html
+          check /en/                     200 text/html
+          check /zh/workflows/xiaohongshu 200 text/html
+          check /en/workflows/mail-reply  200 text/html
+          check /api/index.json          200 application/json
+          check /api/workflows.zh.json   200 application/json
+          check /api/workflows.en.json   200 application/json
+          check /assets/logo.svg         200 image/svg+xml
+          exit $fail
+
+      # The mirror caches @main for 12h (s-maxage=43200), which for API endpoints
+      # means a client falling back could read half-day-old data. jsDelivr cannot
+      # be configured, but it can be purged.
+      #
+      # Only the API payloads: purge reports `providers: {CF, FY}` and measured, it
+      # clears cdn/fastly but not gcore. Since assets are mirrored via gcore
+      # (cdn 301s images to raw), purging them would spend rate-limited requests
+      # for no effect.
+      #
+      # Never fails the job: the deploy already succeeded, and purge is
+      # rate-limited, so a miss must not turn a good deployment red.
+      - name: Purge the jsDelivr JSON mirror
+        continue-on-error: true
+        run: |
+          for p in api/index.json api/workflows.zh.json api/workflows.en.json; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 \
+              "https://purge.jsdelivr.net/gh/${GITHUB_REPOSITORY}@main/docs/public/$p" || true)
+            printf '  %-28s %s\n' "$p" "${code:-000}"
+          done

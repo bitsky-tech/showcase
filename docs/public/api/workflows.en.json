@@ -1,0 +1,53 @@
+{
+  "lang": "en",
+  "workflows": [
+    {
+      "id": "xiaohongshu",
+      "name": "Xiaohongshu content scraper",
+      "desc": "Automatically collect posts and engagement data for selected Xiaohongshu topics",
+      "domain": "Browser automation",
+      "status": "verified",
+      "path": "en/workflows/xiaohongshu"
+    },
+    {
+      "id": "feishuDaily",
+      "name": "Feishu daily report generator",
+      "desc": "Summarize team Feishu messages into a structured daily report",
+      "domain": "Feishu integration",
+      "status": "verified",
+      "path": "en/workflows/feishu-daily"
+    },
+    {
+      "id": "priceMonitor",
+      "name": "Competitor price monitor",
+      "desc": "Monitor competitor-site prices and send alerts when they change",
+      "domain": "Browser automation",
+      "status": "verified",
+      "path": "en/workflows/price-monitor"
+    },
+    {
+      "id": "githubIssues",
+      "name": "GitHub Issue analysis",
+      "desc": "Analyze repository Issue trends and produce a weekly report",
+      "domain": "API integration",
+      "status": "new",
+      "path": "en/workflows/github-issues"
+    },
+    {
+      "id": "pdfExtract",
+      "name": "PDF batch extractor",
+      "desc": "Extract structured data from multiple PDFs into Excel",
+      "domain": "File processing",
+      "status": "verified",
+      "path": "en/workflows/pdf-extract"
+    },
+    {
+      "id": "mailReply",
+      "name": "Automatic email replies",
+      "desc": "Automatically classify and reply to common emails based on rules",
+      "domain": "Email integration",
+      "status": "new",
+      "path": "en/workflows/mail-reply"
+    }
+  ]
+}

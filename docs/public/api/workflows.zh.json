@@ -1,0 +1,53 @@
+{
+  "lang": "zh",
+  "workflows": [
+    {
+      "id": "xiaohongshu",
+      "name": "小红书内容爬虫",
+      "desc": "自动抓取小红书指定话题的笔记内容和互动数据",
+      "domain": "浏览器自动化",
+      "status": "verified",
+      "path": "zh/workflows/xiaohongshu"
+    },
+    {
+      "id": "feishuDaily",
+      "name": "飞书日报生成器",
+      "desc": "每日自动汇总团队飞书消息，生成结构化日报",
+      "domain": "飞书集成",
+      "status": "verified",
+      "path": "zh/workflows/feishu-daily"
+    },
+    {
+      "id": "priceMonitor",
+      "name": "竞品价格监控",
+      "desc": "定时监控竞品网站价格变动并发送告警",
+      "domain": "浏览器自动化",
+      "status": "verified",
+      "path": "zh/workflows/price-monitor"
+    },
+    {
+      "id": "githubIssues",
+      "name": "GitHub Issue 分析",
+      "desc": "自动分析仓库 Issue 趋势，生成周报",
+      "domain": "API 集成",
+      "status": "new",
+      "path": "zh/workflows/github-issues"
+    },
+    {
+      "id": "pdfExtract",
+      "name": "PDF 批量提取器",
+      "desc": "从多个 PDF 中提取结构化数据到 Excel",
+      "domain": "文件处理",
+      "status": "verified",
+      "path": "zh/workflows/pdf-extract"
+    },
+    {
+      "id": "mailReply",
+      "name": "邮件自动回复",
+      "desc": "根据规则自动分类和回复常见邮件",
+      "domain": "邮件集成",
+      "status": "new",
+      "path": "zh/workflows/mail-reply"
+    }
+  ]
+}
