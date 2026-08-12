@@ -23,6 +23,31 @@ export default withMermaid(
     head: [
       ['link', { rel: 'icon', href: '/favicon.ico', sizes: 'any' }],
       ['meta', { name: 'theme-color', content: '#0099FF' }],
+      // Embedding hooks for the desktop app, read from the URL.
+      //
+      // Prefixed with `bridgic-` on purpose: VitePress reads no query parameters
+      // today (it routes on path and hash), but `theme` is a name a future release
+      // or plugin could plausibly claim, and a prefix also makes it obvious these
+      // come from the host app rather than from the site.
+      //
+      // The theme is written into VitePress's own storage key rather than toggling
+      // the class directly: its inline `check-dark-mode` script reads that key
+      // before the first paint, and it owns the class afterwards, so setting the
+      // class alone would be reverted. Doing it here — ahead of that script —
+      // means the first frame is already correct, with no flash of the wrong theme
+      // inside the dialog.
+      [
+        'script',
+        { id: 'bridgic-embed-params' },
+        `(() => {
+  try {
+    const q = new URLSearchParams(location.search)
+    const t = q.get('bridgic-theme')
+    if (t === 'dark' || t === 'light') localStorage.setItem('vitepress-theme-appearance', t)
+    if (q.get('bridgic-embed') === '1') document.documentElement.classList.add('bridgic-embed')
+  } catch {}
+})()`,
+      ],
     ],
 
     locales: {

@@ -180,3 +180,33 @@
   fill: #8b8f9e !important;
   stroke: #8b8f9e !important;
 }
+
+/* Embedded mode, enabled by `?bridgic-embed=1` (see the head script in config.ts).
+   The desktop app opens a single workflow page inside a dialog, where the site's
+   own navigation, sidebar and outline are all dead weight -- the surrounding app
+   already provides that navigation. The document footer goes too: prev/next links
+   would let someone wander out of the workflow they clicked.
+
+   Absent the parameter nothing here applies, so ordinary visitors see no change. */
+html.bridgic-embed .VPNav,
+html.bridgic-embed .VPLocalNav,
+html.bridgic-embed .VPSidebar,
+html.bridgic-embed .VPDocAside,
+html.bridgic-embed .VPDocFooter,
+html.bridgic-embed .VPSkipLink {
+  display: none !important;
+}
+
+html.bridgic-embed .VPContent {
+  padding: 0 !important;
+}
+
+html.bridgic-embed .VPDoc {
+  padding: 1.75rem 2rem !important;
+}
+
+html.bridgic-embed .VPDoc .container,
+html.bridgic-embed .VPDoc .content {
+  max-width: 100% !important;
+  margin: 0 !important;
+}
