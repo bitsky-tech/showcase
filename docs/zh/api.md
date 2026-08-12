@@ -35,6 +35,12 @@
 | `domain` | `string` | 分类标签 |
 | `status` | `'verified' \| 'new'` | `verified` 显示已验证徽章 |
 | `path` | `string` | 仓库相对路径，指向本站详情页 |
+| `goal` | `string` | 这个工作流要解决什么 |
+| `requirement` | `string` | 运行前需要准备什么 |
+| `output` | `string` | 跑完会得到什么 |
+
+后三个字段由桌面端的预览弹窗直接渲染，缺一个就会在弹窗里留一行空白 —— 仓库里的
+`check:api` 会拦住这种情况。
 
 ## 完整响应
 
@@ -48,7 +54,10 @@
       "desc": "自动抓取小红书指定话题的笔记内容和互动数据",
       "domain": "浏览器自动化",
       "status": "verified",
-      "path": "zh/workflows/xiaohongshu"
+      "path": "zh/workflows/xiaohongshu",
+      "goal": "采集指定话题下的笔记与互动数据，用于选题调研与爆款归因",
+      "requirement": "已保存的小红书登录态；一个或多个话题关键词",
+      "output": "含正文、图片数与点赞/收藏/评论数的结构化表格"
     }
   ]
 }

@@ -35,6 +35,12 @@ Fields map one-to-one onto the desktop app's `MarketCard`, so no transformation 
 | `domain` | `string` | Category tag |
 | `status` | `'verified' \| 'new'` | `verified` shows the verified badge |
 | `path` | `string` | Repo-relative path to this site's detail page |
+| `goal` | `string` | What this workflow is for |
+| `requirement` | `string` | What has to be in place before running it |
+| `output` | `string` | What you get when it finishes |
+
+The last three are rendered directly by the desktop app's preview dialog, so a
+missing one leaves a blank row there. `check:api` in the repo catches that.
 
 ## Full response
 
@@ -48,7 +54,10 @@ Fields map one-to-one onto the desktop app's `MarketCard`, so no transformation 
       "desc": "Automatically collect posts and engagement data for selected Xiaohongshu topics",
       "domain": "Browser automation",
       "status": "verified",
-      "path": "en/workflows/xiaohongshu"
+      "path": "en/workflows/xiaohongshu",
+      "goal": "Collect posts and engagement data for chosen topics, for research and attribution",
+      "requirement": "A saved Xiaohongshu session; one or more topic keywords",
+      "output": "A structured table with body text, image count and like/save/comment counts"
     }
   ]
 }

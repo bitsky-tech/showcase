@@ -7,7 +7,10 @@
       "desc": "自动抓取小红书指定话题的笔记内容和互动数据",
       "domain": "浏览器自动化",
       "status": "verified",
-      "path": "zh/workflows/xiaohongshu"
+      "path": "zh/workflows/xiaohongshu",
+      "goal": "采集指定话题下的笔记与互动数据，用于选题调研与爆款归因",
+      "requirement": "已保存的小红书登录态；一个或多个话题关键词",
+      "output": "含正文、图片数与点赞/收藏/评论数的结构化表格"
     },
     {
       "id": "feishuDaily",
@@ -15,7 +18,10 @@
       "desc": "每日自动汇总团队飞书消息，生成结构化日报",
       "domain": "飞书集成",
       "status": "verified",
-      "path": "zh/workflows/feishu-daily"
+      "path": "zh/workflows/feishu-daily",
+      "goal": "把一天的群聊压缩成进展、阻塞、待决策三段结论",
+      "requirement": "机器人已在目标群内，且具备读取历史消息的权限",
+      "output": "回发到群的结构化日报，同时归档到云文档"
     },
     {
       "id": "priceMonitor",
@@ -23,7 +29,10 @@
       "desc": "定时监控竞品网站价格变动并发送告警",
       "domain": "浏览器自动化",
       "status": "verified",
-      "path": "zh/workflows/price-monitor"
+      "path": "zh/workflows/price-monitor",
+      "goal": "在竞品调价时第一时间发现并告警",
+      "requirement": "商品页地址列表；页面结构特殊时需指定价格选择器",
+      "output": "超过阈值的变动告警，以及可回溯趋势的历史快照"
     },
     {
       "id": "githubIssues",
@@ -31,7 +40,10 @@
       "desc": "自动分析仓库 Issue 趋势，生成周报",
       "domain": "API 集成",
       "status": "new",
-      "path": "zh/workflows/github-issues"
+      "path": "zh/workflows/github-issues",
+      "goal": "看清一周内的问题集中在哪些方向、哪类在放量",
+      "requirement": "仓库列表；具备读取权限的 GitHub token",
+      "output": "含新增/关闭/停滞数与趋势异常的周报"
     },
     {
       "id": "pdfExtract",
@@ -39,7 +51,10 @@
       "desc": "从多个 PDF 中提取结构化数据到 Excel",
       "domain": "文件处理",
       "status": "verified",
-      "path": "zh/workflows/pdf-extract"
+      "path": "zh/workflows/pdf-extract",
+      "goal": "把版式相对固定的批量文档转成可直接分析的表格",
+      "requirement": "输入目录；由关键字锚点与相对位置构成的字段模板",
+      "output": "一行一文档的 Excel，校验失败的行单独标记待复核"
     },
     {
       "id": "mailReply",
@@ -47,7 +62,10 @@
       "desc": "根据规则自动分类和回复常见邮件",
       "domain": "邮件集成",
       "status": "new",
-      "path": "zh/workflows/mail-reply"
+      "path": "zh/workflows/mail-reply",
+      "goal": "让问法重复的邮件不再占用人工时间",
+      "requirement": "意图与模板的映射；允许自动发送的发件域名单",
+      "output": "自动发送的回复或待确认草稿，并留下处置记录"
     }
   ]
 }
