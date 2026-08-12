@@ -131,6 +131,35 @@ export default withMermaid(
       search: { provider: 'local' },
     },
 
+    /**
+     * Drop the eager `modulepreload` hints for shared chunks.
+     *
+     * VitePress emits one `<link rel="modulepreload">` per chunk in a page's
+     * dependency graph, and mermaid's graph is every diagram renderer it ships:
+     * measured on the built site, each page — including the home page, which has
+     * no diagram at all — preloaded 44 chunks totalling 2352 KB (`architectureDiagram`
+     * 148 KB, `swimlanes` 117 KB, `katex` 255 KB, plus `abnf/c4/class/cynefin/er/
+     * gantt/gitGraph/...`). The HTML itself is 30 KB and arrives in well under a
+     * second, so that payload *was* the wait, and none of it is used unless the
+     * page actually draws that kind of diagram.
+     *
+     * Stripping the hint does not stop anything from loading: mermaid imports the
+     * renderer it needs dynamically, so the chunk is fetched then instead of up
+     * front. Eager bytes drop to 929 KB.
+     *
+     * `framework` and `theme` are kept because every page genuinely needs them
+     * immediately, as is anything outside `chunks/` (the page's own content module).
+     * Not done via `vite.build.modulePreload: false` — that is a Vite build option,
+     * and these links are injected by VitePress's own SSG render, so it has no
+     * effect here (verified).
+     */
+    transformHtml(code) {
+      return code.replace(
+        /<link rel="modulepreload"[^>]*?href="\/assets\/chunks\/(?!framework\.|theme\.)[^"]*"[^>]*>/g,
+        '',
+      )
+    },
+
     markdown: {
       lineNumbers: true,
       math: true,
@@ -144,8 +173,9 @@ export default withMermaid(
     },
 
     // Brand-matched instead of mermaid's default lilac. Fixed values rather than
-    // CSS variables, which mermaid cannot read -- the light palette stays legible
-    // on the dark theme because .mermaid gets a light container in custom.css.
+    // CSS variables, which mermaid cannot read. These are the light-theme values;
+    // custom.css overrides fill/stroke/text under `.dark` with `!important`, since
+    // this palette on a dark background measured 1.05:1.
     mermaid: {
       theme: 'base',
       themeVariables: {
