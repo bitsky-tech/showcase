@@ -20,6 +20,12 @@ export default withMermaid(
     // GitHub Pages answers a miss with a 9KB HTML page, which is easy to miss.
     ignoreDeadLinks: false,
 
+    // A page whose file name starts with `_` is a draft. `dev` still renders it,
+    // so it can be previewed while being written; `build` drops it. Without this
+    // VitePress publishes a draft like any other page *and* puts its text in the
+    // local search index, where readers would find unfinished work.
+    srcExclude: process.argv.includes('build') ? ['**/_*.md'] : [],
+
     head: [
       ['link', { rel: 'icon', href: '/favicon.ico', sizes: 'any' }],
       ['meta', { name: 'theme-color', content: '#0099FF' }],

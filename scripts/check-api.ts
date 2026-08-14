@@ -19,10 +19,15 @@
  *   3. Omitting one of goal/requirement/output. The desktop app renders these
  *      three directly in its preview dialog, so a missing one leaves a blank row
  *      there rather than failing anywhere visible here.
+ *
+ * A page whose file name starts with `_` is a draft: exempt from (1) in both
+ * directions -- it needs no entry, and no entry may point at it. `config.ts`
+ * keeps drafts out of `vitepress build`, so an entry pointing at one would be a
+ * card leading to a 404 on the live site.
  */
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -79,6 +84,9 @@ function checkEntry(lang: string, index: number, raw: unknown): Workflow | null 
   }
   if (!entry.path.startsWith(`${lang}/`)) {
     fail(`${where} (${entry.id}): path '${entry.path}' should start with '${lang}/'`)
+  }
+  if (basename(entry.path).startsWith('_')) {
+    fail(`${where} (${entry.id}): path '${entry.path}' is a draft, which never reaches the built site`)
   }
   const page = join(DOCS, `${entry.path}.md`)
   if (!existsSync(page)) {
@@ -163,13 +171,14 @@ for (const link of configLinks) {
 // nothing). This catches the opposite slip: overwriting an entry when meaning to
 // append one, which leaves the overwritten workflow with a page that no card
 // links to any more. Purely within one language, so translation lag never trips
-// it. `index.md` is the grid itself, not a workflow.
+// it. `index.md` is the grid itself, not a workflow, and `_*.md` is a draft --
+// unfinished work should not have to be listed to pass the check.
 function checkListed(lang: string, entries: Workflow[]): string[] {
   const dir = join(DOCS, lang, 'workflows')
   if (!existsSync(dir)) return []
   const listed = new Set(entries.map((e) => e.path))
   const pages = readdirSync(dir)
-    .filter((name) => name.endsWith('.md') && name !== 'index.md')
+    .filter((name) => name.endsWith('.md') && name !== 'index.md' && !name.startsWith('_'))
     .map((name) => `${lang}/workflows/${name.slice(0, -'.md'.length)}`)
   for (const page of pages) {
     if (!listed.has(page)) fail(`docs/${page}.md has no entry in workflows.${lang}.json`)
