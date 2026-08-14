@@ -210,3 +210,11 @@ html.bridgic-embed .VPDoc .content {
   max-width: 100% !important;
   margin: 0 !important;
 }
+
+/* medium-zoom's overlay and zoomed image default to the page stacking order,
+   which puts them under the fixed navbar (--vp-z-index-nav: 30). The value
+   follows the fix in medium-zoom's own README FAQ. */
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 999;
+}
