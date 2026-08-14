@@ -16,9 +16,6 @@
  *      to ship unnoticed.
  *   2. Letting `status` drift between languages *for an id both of them carry*,
  *      which would show a "verified" badge in Chinese and not in English.
- *   3. Omitting one of goal/requirement/output. The desktop app renders these
- *      three directly in its preview dialog, so a missing one leaves a blank row
- *      there rather than failing anywhere visible here.
  *
  * A page whose file name starts with `_` is a draft: exempt from (1) in both
  * directions -- it needs no entry, and no entry may point at it. `config.ts`
@@ -58,10 +55,6 @@ interface Workflow {
   domain: string
   status: string
   path: string
-  /** Shown in the desktop app's preview dialog: goal / prerequisites / result. */
-  goal: string
-  requirement: string
-  output: string
 }
 
 /** Shape-check one entry; returns it only when every field is usable. */
@@ -72,7 +65,7 @@ function checkEntry(lang: string, index: number, raw: unknown): Workflow | null 
     return null
   }
   const e = raw as Record<string, unknown>
-  for (const key of ['id', 'name', 'desc', 'domain', 'status', 'path', 'goal', 'requirement', 'output'] as const) {
+  for (const key of ['id', 'name', 'desc', 'domain', 'status', 'path'] as const) {
     if (typeof e[key] !== 'string' || (e[key] as string).length === 0) {
       fail(`${where}: field '${key}' must be a non-empty string`)
       return null

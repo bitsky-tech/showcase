@@ -17,6 +17,10 @@
  * Run: bun run check:responsive   (needs `bun run preview` on :4173)
  */
 
+import { readFileSync, readdirSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import { chromium, type Browser, type Page } from 'playwright'
 
 // The card count is read from the payloads rather than hardcoded: the two
@@ -25,6 +29,29 @@ import en from '../docs/public/api/workflows.en.json'
 import zh from '../docs/public/api/workflows.zh.json'
 
 const BASE = process.env.CHECK_BASE ?? 'http://127.0.0.1:4173'
+const DOCS = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'docs')
+
+/**
+ * A workflow page to exercise, discovered rather than hardcoded.
+ *
+ * It has to draw a diagram, because the dark-mode check measures mermaid's
+ * contrast on it. Naming one page here meant the script broke the moment that
+ * page was renamed or deleted -- which is exactly what happened when the demo
+ * entries were replaced by real tutorials, and nothing caught it because CI does
+ * not run this script.
+ */
+function workflowPageWithDiagram(): string {
+  const dir = join(DOCS, 'zh', 'workflows')
+  for (const name of readdirSync(dir).sort()) {
+    if (!name.endsWith('.md') || name === 'index.md' || name.startsWith('_')) continue
+    if (readFileSync(join(dir, name), 'utf8').includes('```mermaid')) {
+      return `/zh/workflows/${name.slice(0, -'.md'.length)}`
+    }
+  }
+  throw new Error('no zh workflow page draws a mermaid diagram; the dark-mode check needs one')
+}
+
+const WORKFLOW_PAGE = workflowPageWithDiagram()
 
 /** Chosen around VitePress's own breakpoints (768 / 960 / 1280) plus the edges. */
 const VIEWPORTS = [
@@ -38,7 +65,7 @@ const VIEWPORTS = [
   { name: 'desktop-xl', width: 1920, height: 1000 },
 ]
 
-const PAGES = ['/zh/', '/en/', '/zh/workflows/xiaohongshu', '/en/api']
+const PAGES = ['/zh/', '/en/', WORKFLOW_PAGE, '/en/api']
 
 /**
  * Workflow detail pages carry no switcher on purpose: a workflow published in one
@@ -103,7 +130,7 @@ async function checkDarkMode(browser: Browser) {
   const page = await ctx.newPage()
   const label = 'dark 1440px'
 
-  await page.goto(`${BASE}/zh/workflows/xiaohongshu`, { waitUntil: 'networkidle' })
+  await page.goto(`${BASE}${WORKFLOW_PAGE}`, { waitUntil: 'networkidle' })
   await page.waitForSelector('.mermaid svg', { timeout: 20_000 })
   await page.waitForTimeout(600)
 
@@ -128,7 +155,7 @@ async function checkDarkMode(browser: Browser) {
   if (strokeContrast < 3) {
     problems.push({
       viewport: label,
-      path: '/zh/workflows/xiaohongshu',
+      path: WORKFLOW_PAGE,
       issue: `mermaid node stroke vs page background is ${strokeContrast.toFixed(2)}:1, want >= 3 (stroke ${m.nodeStroke}, bg ${m.pageBg})`,
     })
   }
@@ -137,7 +164,7 @@ async function checkDarkMode(browser: Browser) {
   if (textContrast < 4.5) {
     problems.push({
       viewport: label,
-      path: '/zh/workflows/xiaohongshu',
+      path: WORKFLOW_PAGE,
       issue: `mermaid label vs node fill is ${textContrast.toFixed(2)}:1, want >= 4.5 (WCAG AA)`,
     })
   }

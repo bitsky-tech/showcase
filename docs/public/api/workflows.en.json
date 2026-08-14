@@ -7,10 +7,7 @@
       "desc": "Monitor competitor-site prices and send alerts when they change",
       "domain": "Browser automation",
       "status": "verified",
-      "path": "en/workflows/price-monitor",
-      "goal": "Notice a competitor price change as soon as it happens",
-      "requirement": "A list of product URLs; a price selector where the markup is unusual",
-      "output": "Alerts past the threshold, plus snapshots that keep the trend auditable"
+      "path": "en/workflows/price-monitor"
     },
     {
       "id": "githubIssues",
@@ -18,10 +15,7 @@
       "desc": "Analyze repository Issue trends and produce a weekly report",
       "domain": "API integration",
       "status": "new",
-      "path": "en/workflows/github-issues",
-      "goal": "See where the week’s problems cluster and which class is spiking",
-      "requirement": "A list of repositories; a GitHub token with read access",
-      "output": "A weekly report with opened/closed/stale counts and trend outliers"
+      "path": "en/workflows/github-issues"
     },
     {
       "id": "pdfExtract",
@@ -29,10 +23,7 @@
       "desc": "Extract structured data from multiple PDFs into Excel",
       "domain": "File processing",
       "status": "verified",
-      "path": "en/workflows/pdf-extract",
-      "goal": "Turn a batch of fixed-layout documents into a table you can analyse",
-      "requirement": "An input directory; a field template of keyword anchors and offsets",
-      "output": "One Excel row per document, with failed validations flagged for review"
+      "path": "en/workflows/pdf-extract"
     },
     {
       "id": "mailReply",
@@ -40,10 +31,7 @@
       "desc": "Automatically classify and reply to common emails based on rules",
       "domain": "Email integration",
       "status": "new",
-      "path": "en/workflows/mail-reply",
-      "goal": "Stop repetitive email questions from consuming human time",
-      "requirement": "An intent-to-template mapping; sender domains cleared for auto-send",
-      "output": "A sent reply or a draft awaiting review, with the decision recorded"
+      "path": "en/workflows/mail-reply"
     }
   ]
 }

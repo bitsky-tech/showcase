@@ -33,13 +33,36 @@ error); and moving domain or CDN touches one place.
 **Manifests store repo-relative paths.** `"path": "zh/workflows/xiaohongshu"`, not an
 absolute URL. Clients join `base + path`.
 
-**Array order is part of the contract.** It drives card order on the home page and
-mirrors the desktop app's own order, which is derived from a hardcoded id list
-(`DEFAULT_MARKET_CARD_IDS`) rather than alphabetical — so sorting the JSON would
-silently change the presentation.
+**Array order is part of the contract.** It drives card order both on the home page
+and in the desktop app, which renders the array as it arrives — so sorting the JSON
+alphabetically would silently change the presentation in two places.
 
 **Adding a field is safe; renaming or removing one is breaking.** Clients ignore
-unknown fields.
+unknown fields, so a new one costs nothing. Removing one has to be done from the
+client end first: its schema validates the payload, and a field it still requires
+but no longer receives fails the whole parse. See *Every field is a field somebody
+renders* below.
+
+## Every field is a field somebody renders
+
+The payload carried `goal`, `requirement` and `output` for a while — one-line
+answers to "what is this for / what do I need / what do I get". They were removed
+once it turned out nothing displayed them: the desktop card shows `name`, `desc`,
+`domain` and `status`, and its preview dialog embeds this site's own page rather
+than composing one out of fields, so it only needs `path` and `name`. This site's
+grid reads the same six. Three hand-written strings per workflow, rendered nowhere,
+for months.
+
+They were kept alive by a comment claiming the preview dialog rendered them, which
+had been true before the dialog switched to embedding the page. **A field nobody
+reads does not announce itself** — it just accumulates, and every new workflow pays
+for it in fields to write and get wrong.
+
+Removal order matters, and it is the opposite of what feels natural: the desktop
+client's zod schema required all three, so deleting them here first would have
+failed validation in every shipped build. The client dropped them from its schema
+first (`.passthrough()` meant it ignored the ones still arriving), and only then did
+the payload stop carrying them.
 
 ## The languages are allowed to diverge
 

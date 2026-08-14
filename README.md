@@ -78,9 +78,9 @@ bilingual.
 | Workflows (en) | `https://showcase.bridgic.ai/api/workflows.en.json` |
 
 Clients hardcode only `index.json` and discover the rest from its response.
-Fields map one-to-one onto the desktop app's `MarketCard` (`name`, `desc`,
-`domain`, `status`), plus `id` and `path`. Full reference on the site itself at
-`/zh/api` and `/en/api`.
+Six fields, each of them rendered: `name` / `desc` / `domain` / `status` on the
+card, `path` for the page behind it, `id` as the stable key. Full reference on the
+site itself at `/zh/api` and `/en/api`.
 
 Two rules that are easy to get wrong:
 

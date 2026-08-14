@@ -35,12 +35,10 @@ Fields map one-to-one onto the desktop app's `MarketCard`, so no transformation 
 | `domain` | `string` | Category tag |
 | `status` | `'verified' \| 'new'` | `verified` shows the verified badge |
 | `path` | `string` | Repo-relative path to this site's detail page |
-| `goal` | `string` | What this workflow is for |
-| `requirement` | `string` | What has to be in place before running it |
-| `output` | `string` | What you get when it finishes |
 
-The last three are rendered directly by the desktop app's preview dialog, so a
-missing one leaves a blank row there. `check:api` in the repo catches that.
+The page `path` points at is the one the desktop app embeds in its preview dialog,
+so the longer explanation lives in the page itself rather than being shipped as
+separate fields.
 
 ## Full response
 
@@ -49,15 +47,12 @@ missing one leaves a blank row there. `check:api` in the repo catches that.
   "lang": "en",
   "workflows": [
     {
-      "id": "xiaohongshu",
-      "name": "Xiaohongshu content scraper",
-      "desc": "Automatically collect posts and engagement data for selected Xiaohongshu topics",
+      "id": "priceMonitor",
+      "name": "Competitor price monitor",
+      "desc": "Monitor competitor-site prices and send alerts when they change",
       "domain": "Browser automation",
       "status": "verified",
-      "path": "en/workflows/xiaohongshu",
-      "goal": "Collect posts and engagement data for chosen topics, for research and attribution",
-      "requirement": "A saved Xiaohongshu session; one or more topic keywords",
-      "output": "A structured table with body text, image count and like/save/comment counts"
+      "path": "en/workflows/price-monitor"
     }
   ]
 }
@@ -67,7 +62,7 @@ missing one leaves a blank row there. `check:api` in the repo catches that.
 
 - **`path` is repo-relative, not an absolute URL.** Clients join `base + path`, so switching domain or CDN means changing one client constant
 - **Array order is meaningful.** It drives card order and matches the desktop app — do not re-sort alphabetically
-- **Both languages must share the same `id` set in the same order**; only the copy differs. A check script in the repo enforces this
+- **The two languages are independent.** A workflow is published in one language and translated later, so the entries and their order may differ. Where an `id` exists in both, `status` is guaranteed to agree
 - **Adding a field is safe** — clients should ignore unknown fields. Renaming or removing one is breaking
 
 ## Caching
