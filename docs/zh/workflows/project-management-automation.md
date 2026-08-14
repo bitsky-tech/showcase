@@ -10,18 +10,18 @@
 
 ## 成品展示
 
-本教程产出的两个自动化工作流，可直接下载并导入进Bridgic Agent，作为参考：
-- [上报 Bridgic Agent 开发任务](<./downloads/上报 Bridgic Agent 开发任务.amphi-workflow>)
-- [自动化 Bug 分析报告 - BridgicAgent项目](<./downloads/自动化 Bug 分析报告 - BridgicAgent项目.amphi-workflow>)
-
-**注意**：由于每个人的电脑桌面运行环境不同，这两个工作流未必能在导入后直接运行。仅作为参考，你可以参考它们制作自己真正需要的工作流。
-如果你一定要运行这两个工作流，可以在运行碰到问题后，要求Bridgic Agent根据你的实际运行环境修复它们即可。
-
 在本教程结束后，你将会看到，两个成功构建的工作流：
 
 ![工作流截图workflow-card-1.webp](./pma-images/workflow-card-1.webp)
 
 ![工作流截图workflow-card-2.webp](./pma-images/workflow-card-2.webp)
+
+本教程产出的这两个自动化工作流，可直接下载并导入进Bridgic Agent，作为参考：
+- [上报 Bridgic Agent 开发任务](<./downloads/上报 Bridgic Agent 开发任务.amphi-workflow>)
+- [自动化 Bug 分析报告 - BridgicAgent项目](<./downloads/自动化 Bug 分析报告 - BridgicAgent项目.amphi-workflow>)
+
+**注意**：由于每个人的电脑桌面运行环境不同，这两个工作流未必能在导入后直接运行。仅作为参考，你可以参考它们制作自己真正需要的工作流。
+如果你一定要运行这两个工作流，可以在运行碰到问题后，要求Bridgic Agent根据你的实际运行环境修复它们即可。
 
 还有一个定时调度任务：
 
