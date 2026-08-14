@@ -12,21 +12,21 @@
 
 在本教程结束后，你将会看到，两个成功构建的工作流：
 
-[<img src="./pma-images/workflow-card-1.png" width="80%" />](./pma-images/workflow-card-1.png)
+![工作流截图workflow-card-1.png](./pma-images/workflow-card-1.png)
 
-[<img src="./pma-images/workflow-card-2.png" width="80%" />](./pma-images/workflow-card-2.png)
+![工作流截图workflow-card-2.png](./pma-images/workflow-card-2.png)
 
 还有一个定时调度任务：
 
-[<img src="./pma-images/scheduled-success-result.png" width="80%" />](./pma-images/scheduled-success-result.png)
+![工作流截图scheduled-success-result.png](./pma-images/scheduled-success-result.png)
 
 一个基于飞书表格的任务面板：
 
-[<img src="./pma-images/scheduled-feishu-writeback.png" width="80%" />](./pma-images/scheduled-feishu-writeback.png)
+![工作流截图scheduled-feishu-writeback.png](./pma-images/scheduled-feishu-writeback.png)
 
 学会子agent的概念和管理方式：
 
-[<img src="./pma-images/sub-agent.png" width="80%" />](./pma-images/sub-agent.png)
+![工作流截图sub-agent.png](./pma-images/sub-agent.png)
 
 ## 工作流构建教程
 
@@ -34,11 +34,11 @@
 
 准备你自己的飞书账号，创建一个多维表格出来，用来保存和展示开发任务（新特性开发或Bug记录）。如下：
 
-[<img src="./pma-images/table-creation.png" width="80%" />](./pma-images/table-creation.png)
+![工作流截图table-creation.png](./pma-images/table-creation.png)
 
 在飞书开放平台创建一个应用，找到App ID和App Secret。
 
-[<img src="./pma-images/feishu-app-creation.png" width="80%" />](./pma-images/feishu-app-creation.png)
+![工作流截图feishu-app-creation.png](./pma-images/feishu-app-creation.png)
 
 
 ### 流程一：通过agent上报bug
@@ -47,55 +47,55 @@
 
 使用“/build”命令开始工作流创建。简洁、准确地描述需求：
 
-[<img src="./pma-images/new-task-insertion.png" width="80%" />](./pma-images/new-task-insertion.png)
+![工作流截图new-task-insertion.png](./pma-images/new-task-insertion.png)
 
 Brdgic Agent对于需求中不明确的描述会主动和你确认（需求澄清）：
 
-[<img src="./pma-images/ask-human-1.png" width="80%" />](./pma-images/ask-human-1.png)
+![工作流截图ask-human-1.png](./pma-images/ask-human-1.png)
 
-[<img src="./pma-images/ask-human-2.png" width="80%" />](./pma-images/ask-human-2.png)
+![工作流截图ask-human-2.png](./pma-images/ask-human-2.png)
 
 Brdgic Agent还会让你选择或确认一个任务验收标准：
 
-[<img src="./pma-images/check-condition-1.png" width="80%" />](./pma-images/check-condition-1.png)
+![工作流截图check-condition-1.png](./pma-images/check-condition-1.png)
 
 这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Brdgic Agent会根据你的评论进行相应的修改。
 
-[<img src="./pma-images/task-req-1.png" width="80%" />](./pma-images/task-req-1.png)
+![工作流截图task-req-1.png](./pma-images/task-req-1.png)
 
 请关注任务说明书中对于“最终交付物”和“验收标准”的描述。
 
-[<img src="./pma-images/task-req-2.png" width="80%" />](./pma-images/task-req-2.png)
+![工作流截图task-req-2.png](./pma-images/task-req-2.png)
 
 至此任务说明书已经确认。接下来请遵照Brdgic Agent的引导进行操作。
 
-[<img src="./pma-images/building-1.png" width="80%" />](./pma-images/building-1.png)
+![工作流截图building-1.png](./pma-images/building-1.png)
 
-[<img src="./pma-images/building-2.png" width="80%" />](./pma-images/building-2.png)
+![工作流截图building-2.png](./pma-images/building-2.png)
 
 构建工作流的最后一步：给工作流取个名字。
 
-[<img src="./pma-images/confirm-workflow-name.png" width="80%" />](./pma-images/confirm-workflow-name.png)
+![工作流截图confirm-workflow-name.png](./pma-images/confirm-workflow-name.png)
 
 工作流创建成功！
 
-[<img src="./pma-images/create-workflow-sucess.png" width="80%" />](./pma-images/create-workflow-sucess.png)
+![工作流截图create-workflow-sucess.png](./pma-images/create-workflow-sucess.png)
 
 现在你可以在Brdgic Agent的工作流页面中发现一个新创建出来的工作流卡片，如下：
 
-[<img src="./pma-images/workflow-card-1.png" width="80%" />](./pma-images/workflow-card-1.png)
+![工作流截图workflow-card-1.png](./pma-images/workflow-card-1.png)
 
 #### 运行工作流
 
-[<img src="./pma-images/run-workflow-insertion.png" width="80%" />](./pma-images/run-workflow-insertion.png)
+![工作流截图run-workflow-insertion.png](./pma-images/run-workflow-insertion.png)
 
-[<img src="./pma-images/running-workflow-1.png" width="80%" />](./pma-images/running-workflow-1.png)
+![工作流截图running-workflow-1.png](./pma-images/running-workflow-1.png)
 
-[<img src="./pma-images/run-workflow-sucess.png" width="80%" />](./pma-images/run-workflow-sucess.png)
+![工作流截图run-workflow-sucess.png](./pma-images/run-workflow-sucess.png)
 
 这个工作流执行成功后，飞书多维表格中会自动新增一条任务记录。如图：
 
-[<img src="./pma-images/table-after-insertion.png" width="80%" />](./pma-images/table-after-insertion.png)
+![工作流截图table-after-insertion.png](./pma-images/table-after-insertion.png)
 
 
 ### 流程二：自动化扫描并分析bug
@@ -104,76 +104,76 @@ Brdgic Agent还会让你选择或确认一个任务验收标准：
 
 使用“/build”命令开始工作流创建。简洁、准确地描述需求：
 
-[<img src="./pma-images/new-task-bug.png" width="80%" />](./pma-images/new-task-bug.png)
+![工作流截图new-task-bug.png](./pma-images/new-task-bug.png)
 
 Brdgic Agent主动向你进行需求澄清：
 
-[<img src="./pma-images/clarify-1.png" width="80%" />](./pma-images/clarify-1.png)
+![工作流截图clarify-1.png](./pma-images/clarify-1.png)
 
-[<img src="./pma-images/clarify-2.png" width="80%" />](./pma-images/clarify-2.png)
+![工作流截图clarify-2.png](./pma-images/clarify-2.png)
 
 Brdgic Agent提示你选择任务的验收标准：
 
-[<img src="./pma-images/check-condition-a.png" width="80%" />](./pma-images/check-condition-a.png)
+![工作流截图check-condition-a.png](./pma-images/check-condition-a.png)
 
-[<img src="./pma-images/check-condition-b.png" width="80%" />](./pma-images/check-condition-b.png)
+![工作流截图check-condition-b.png](./pma-images/check-condition-b.png)
 
 这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Brdgic Agent会根据你的评论进行相应的修改。
 
-[<img src="./pma-images/task-req-a.png" width="80%" />](./pma-images/task-req-a.png)
+![工作流截图task-req-a.png](./pma-images/task-req-a.png)
 
 请关注任务说明书中对于“最终交付物”和“验收标准”的描述。
 
-[<img src="./pma-images/task-req-b.png" width="80%" />](./pma-images/task-req-b.png)
+![工作流截图task-req-b.png](./pma-images/task-req-b.png)
 
 
 构建工作流的最后一步：给工作流取个名字。
 
-[<img src="./pma-images/confirm-workflow-2-name.png" width="80%" />](./pma-images/confirm-workflow-2-name.png)
+![工作流截图confirm-workflow-2-name.png](./pma-images/confirm-workflow-2-name.png)
 
 工作流创建成功！
 
-[<img src="./pma-images/create-workflow-2-sucess.png" width="80%" />](./pma-images/create-workflow-2-sucess.png)
+![工作流截图create-workflow-2-sucess.png](./pma-images/create-workflow-2-sucess.png)
 
 现在你可以在Brdgic Agent的工作流页面中发现一个新创建出来的工作流卡片，如下：
 
-[<img src="./pma-images/workflow-card-2.png" width="80%" />](./pma-images/workflow-card-2.png)
+![工作流截图workflow-card-2.png](./pma-images/workflow-card-2.png)
 
 #### 定时调度工作流
 
 刚刚创建出来的新工作流，你可以直接运行它。但在这里，我们使用调度功能来定时执行它。
 
-[<img src="./pma-images/create-schedule.png" width="80%" />](./pma-images/create-schedule.png)
+![工作流截图create-schedule.png](./pma-images/create-schedule.png)
 
-[<img src="./pma-images/config-schedule.png" width="80%" />](./pma-images/config-schedule.png)
+![工作流截图config-schedule.png](./pma-images/config-schedule.png)
 
-[<img src="./pma-images/scheduled-complete.png" width="80%" />](./pma-images/scheduled-complete.png)
+![工作流截图scheduled-complete.png](./pma-images/scheduled-complete.png)
 
 这时一个定时任务就调度成功了。
 
 已经调度成功的定时任务，可以在“调度”页面进行管理：
 
-[<img src="./pma-images/scheduled-run.png" width="80%" />](./pma-images/scheduled-run.png)
+![工作流截图scheduled-run.png](./pma-images/scheduled-run.png)
 
 可以随时进来查看定时任务每次的执行过程及结果：
 
-[<img src="./pma-images/scheduled-run-display.png" width="80%" />](./pma-images/scheduled-run-display.png)
+![工作流截图scheduled-run-display.png](./pma-images/scheduled-run-display.png)
 
 我们看到它的执行过程启动了一个**子agent**。鉴于当前执行的这个任务比较特殊，它有一个“扫描代码库并分析bug”的子过程，非常适合使用子agent来完成。因此Bridgic Agent在这个工作流中自动拆分出了一个子agent来完成这个字过程。如下是子agent的执行过程：
 
-[<img src="./pma-images/sub-agent.png" width="80%" />](./pma-images/sub-agent.png)
+![工作流截图sub-agent.png](./pma-images/sub-agent.png)
 
 定时任务这次执行成功后，可以看到执行结果：
 
-[<img src="./pma-images/scheduled-success-result.png" width="80%" />](./pma-images/scheduled-success-result.png)
+![工作流截图scheduled-success-result.png](./pma-images/scheduled-success-result.png)
 
 点击上图中的“查看结果”，可以看到这次任务执行的产出：
 
-[<img src="./pma-images/scheduled-success-outputs.png" width="80%" />](./pma-images/scheduled-success-outputs.png)
+![工作流截图scheduled-success-outputs.png](./pma-images/scheduled-success-outputs.png)
 
 最后我们会看到飞书上的任务面板中，记录Bug扫描的字段也已经被自动回填：
 
-[<img src="./pma-images/scheduled-feishu-writeback.png" width="80%" />](./pma-images/scheduled-feishu-writeback.png)
+![工作流截图scheduled-feishu-writeback.png](./pma-images/scheduled-feishu-writeback.png)
 
 
 ### 更多相关流程的自动化
