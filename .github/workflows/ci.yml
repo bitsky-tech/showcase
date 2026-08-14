@@ -33,8 +33,9 @@ jobs:
 
       # The same two gates deploy.yml runs, in the same order, so a PR cannot pass
       # here and then fail after the merge:
-      #   check:api  -- the two languages drifting apart, or a `path` pointing at a
-      #                 page that does not exist
+      #   check:api  -- a workflow page with no payload entry or the reverse, a
+      #                 `path` pointing at a page that does not exist, `status`
+      #                 disagreeing between the languages
       #   build      -- any broken internal link, since ignoreDeadLinks is false
       - run: bun run check:api
       - run: bun run build

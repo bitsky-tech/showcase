@@ -12,12 +12,24 @@ import { computed } from 'vue'
  * labels can simply sit side by side at fixed positions — no hover, one click.
  *
  * Keeps the reader on the same page across the switch: only the leading language
- * segment is rewritten. Safe here because the two trees are kept symmetric (the
- * check-api script enforces it for workflow pages).
+ * segment is rewritten. That only holds where both trees carry the page, which
+ * is why workflow detail pages are excluded below.
  */
 const { lang, page } = useData()
 
 const isZh = computed(() => lang.value.startsWith('zh'))
+
+/**
+ * A workflow is written in Chinese first and translated whenever it is
+ * translated, so on a detail page the counterpart frequently does not exist.
+ * Hiding the switch there beats handing the reader a link into a 404. The rest
+ * of the site -- home, the workflow index, the API page -- is always bilingual,
+ * so it keeps the switch.
+ */
+const isWorkflowDetail = computed(() => {
+  const rest = page.value.relativePath.replace(/^(zh|en)\//, '')
+  return rest.startsWith('workflows/') && rest !== 'workflows/index.md'
+})
 
 /** `zh/workflows/xiaohongshu.md` -> `/en/workflows/xiaohongshu` */
 function hrefFor(target: 'zh' | 'en'): string {
@@ -32,7 +44,7 @@ const langs = [
 </script>
 
 <template>
-  <div class="lang-switch">
+  <div v-if="!isWorkflowDetail" class="lang-switch">
     <template v-for="(l, i) in langs" :key="l.code">
       <span v-if="i > 0" class="sep" aria-hidden="true">/</span>
       <span v-if="(l.code === 'zh') === isZh" class="lang current" aria-current="true">{{ l.label }}</span>
