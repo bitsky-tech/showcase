@@ -41,15 +41,51 @@ silently change the presentation.
 **Adding a field is safe; renaming or removing one is breaking.** Clients ignore
 unknown fields.
 
-## Symmetry between the languages
+## The languages are allowed to diverge
 
-Both languages live under a prefix (`/zh/`, `/en/`) instead of one at the root. That
-keeps the page tree symmetric with the API file names, and adding a third language
-needs no restructuring.
+Both languages live under a prefix (`/zh/`, `/en/`) instead of one at the root, so
+adding a third needs no restructuring.
 
-The consequence is a hard constraint: `LangSwitch` only rewrites the leading path
-segment, so **a page that exists in one language only makes the switcher point at a
-404**. `check:api` enforces symmetry rather than trusting anyone to remember.
+`check:api` used to enforce that the two page trees were identical. That was
+abandoned, because it encoded a false assumption: it treated translation as part of
+publishing a workflow. In practice a tutorial is written in Chinese and translated
+later or never, so the rule blocked correct work — and its failure output buried the
+real mistakes in noise. The branch that triggered the change produced four errors,
+two of which were "no English counterpart" for pages nobody had translated yet.
+
+What replaced it is narrower and strictly more useful: **each language is checked
+against its own payload, in both directions.** Every `docs/<lang>/workflows/*.md`
+must have an entry in `workflows.<lang>.json`, and every entry's `path` must point at
+a page that exists. Translation lag cannot trip either one. Run against that same
+branch, the new rule reports two errors instead of four, and both are real: the
+branch had overwritten the `xiaohongshu` and `feishuDaily` entries instead of
+appending, dropping two workflows off the home page. The old symmetry rule caught
+that only by accident.
+
+Across languages exactly one rule survives — `status` must agree for an `id` both of
+them carry — because a "verified" badge in one language and not the other is always
+a mistake, never a work-in-progress state.
+
+The cost is paid at the switcher. `LangSwitch` only rewrites the leading path
+segment, so a page that exists in one language only would point at a 404. Rather
+than let that ship, the switcher is **hidden on workflow detail pages** — the only
+place where a counterpart is likely to be missing. Everything else (home, the
+workflow index, the API page) is bilingual by construction and keeps it.
+
+**Drafts.** A file named `_<slug>.md` is exempt from the payload check, and
+`config.ts` excludes `**/_*.md` from `build` while leaving it in `dev`. Both halves
+are needed: VitePress otherwise publishes a draft like any other page *and* indexes
+its text in the local search, so readers would find unfinished work by searching.
+The exemption is symmetric — a payload entry may not point at a draft either, since
+that would be a card leading to a 404 on the live site.
+
+## The nav and sidebar were hand-maintained lists
+
+Both are gone. Every new page needed an entry added to `config.ts` in lockstep, in
+both languages, and nothing failed if you forgot — the page simply had no route into
+it. That is exactly the failure the payload check now catches, so keeping a second
+hand-written index alongside it bought nothing. The card grid on the home page is
+the index, and it reads the same payload the API serves.
 
 ## Two bugs that shaped the checks
 
@@ -85,8 +121,8 @@ jumping around. On phones it is worse: three taps (hamburger → expand the lang
 group → pick one).
 
 A flyout is designed for many locales. With two, both labels fit side by side at
-fixed positions — no hover, one click, and `check:responsive` asserts exactly one
-switcher is visible at every breakpoint.
+fixed positions — no hover, one click, and `check:responsive` asserts the switcher
+count at every breakpoint (one, or none on workflow detail pages).
 
 ## Fonts
 

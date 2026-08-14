@@ -8,7 +8,8 @@
  * have to be enumerated.
  *
  * What it asserts, on every breakpoint and in both languages:
- *   - exactly one language switcher is visible
+ *   - exactly one language switcher is visible -- none on workflow detail pages,
+ *     which deliberately carry no switcher (their counterpart may not exist yet)
  *   - nothing overflows the viewport horizontally
  *   - the workflow cards render and stay inside the container
  *   - no console errors
@@ -17,6 +18,11 @@
  */
 
 import { chromium, type Browser, type Page } from 'playwright'
+
+// The card count is read from the payloads rather than hardcoded: the two
+// languages are free to list different workflows, so there is no single number.
+import en from '../docs/public/api/workflows.en.json'
+import zh from '../docs/public/api/workflows.zh.json'
 
 const BASE = process.env.CHECK_BASE ?? 'http://127.0.0.1:4173'
 
@@ -33,6 +39,14 @@ const VIEWPORTS = [
 ]
 
 const PAGES = ['/zh/', '/en/', '/zh/workflows/xiaohongshu', '/en/api']
+
+/**
+ * Workflow detail pages carry no switcher on purpose: a workflow published in one
+ * language may have no counterpart yet, and a switch into a 404 is worse than no
+ * switch. Everywhere else it is exactly one -- the assertion the two-at-once bug
+ * above calls for.
+ */
+const expectedSwitchers = (path: string) => (/\/workflows\/.+/.test(path) ? 0 : 1)
 
 interface Problem {
   viewport: string
@@ -150,13 +164,14 @@ async function main() {
       await page.goto(BASE + path, { waitUntil: 'networkidle' })
       await page.waitForTimeout(300)
 
-      // 1. exactly one language switcher
+      // 1. the expected number of language switchers
       const switchers = await visibleLangSwitchers(page)
-      if (switchers.length !== 1) {
+      const expected = expectedSwitchers(path)
+      if (switchers.length !== expected) {
         problems.push({
           viewport: `${vp.name} ${vp.width}px`,
           path,
-          issue: `${switchers.length} language switchers visible: [${switchers.join(', ')}]`,
+          issue: `${switchers.length} language switchers visible, expected ${expected}: [${switchers.join(', ')}]`,
         })
       }
 
@@ -186,6 +201,7 @@ async function main() {
 
       // 3. cards render and stay inside the container, on pages that have them
       if (path === '/zh/' || path === '/en/') {
+        const expectedCards = (path === '/zh/' ? zh : en).workflows.length
         const cards = await page.evaluate(() => {
           const list = [...document.querySelectorAll('.wf-card')]
           const docW = document.documentElement.clientWidth
@@ -197,8 +213,12 @@ async function main() {
             }).length,
           }
         })
-        if (cards.count !== 6) {
-          problems.push({ viewport: `${vp.name} ${vp.width}px`, path, issue: `expected 6 cards, found ${cards.count}` })
+        if (cards.count !== expectedCards) {
+          problems.push({
+            viewport: `${vp.name} ${vp.width}px`,
+            path,
+            issue: `expected ${expectedCards} cards, found ${cards.count}`,
+          })
         }
         if (cards.outside > 0) {
           problems.push({ viewport: `${vp.name} ${vp.width}px`, path, issue: `${cards.outside} card(s) outside the viewport` })
@@ -224,7 +244,10 @@ async function main() {
     for (const p of problems) console.error(`  - [${p.viewport}] ${p.path}: ${p.issue}`)
     process.exit(1)
   }
-  console.log(`\ncheck-responsive: ok -- ${VIEWPORTS.length} breakpoints x ${PAGES.length} pages, one switcher each, no overflow`)
+  console.log(
+    `\ncheck-responsive: ok -- ${VIEWPORTS.length} breakpoints x ${PAGES.length} pages, ` +
+      `one switcher each (none on workflow pages), no overflow`,
+  )
 }
 
 await main()

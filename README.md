@@ -1,8 +1,8 @@
 # showcase
 
 Workflow showcase and data API for bridgic clients, served from
-`showcase.bridgic.ai`. Built with VitePress, bilingual (`zh` / `en`) with a
-symmetric page tree and a matching pair of JSON endpoints.
+`showcase.bridgic.ai`. Built with VitePress, bilingual (`zh` / `en`) with a pair
+of JSON endpoints, one per language.
 
 One site serves both audiences: humans read the pages, the desktop app reads
 `api/*.json`. The home page grid and the API are driven by the **same payload**,
@@ -21,11 +21,12 @@ bun run preview    # serves the built site on :4173
 
 | Path | Purpose |
 |---|---|
-| `docs/zh/**`, `docs/en/**` | Pages. The two trees are kept symmetric — enforced by `check:api` |
+| `docs/zh/**`, `docs/en/**` | Pages. The two trees are independent — see *Bilingual contract* |
+| `docs/**/_*.md` | Drafts. Rendered by `dev`, never built or published |
 | `docs/index.md` | Root redirect; picks a language from the browser |
 | `docs/public/api/*.json` | Hand-written data endpoints, published verbatim |
 | `docs/public/assets/` | Brand logo and favicon |
-| `docs/.vitepress/config.ts` | Locales, nav, sidebar, markdown and mermaid setup |
+| `docs/.vitepress/config.ts` | Locales, nav, markdown and mermaid setup |
 | `docs/.vitepress/theme/` | Brand tokens, the workflow card grid, the language switcher |
 | `scripts/` | Pre-publish checks (see below) |
 | `README.md`, `CONVENTIONS.md` | **Never published** — CI only uploads the built site |
@@ -36,23 +37,37 @@ no build step in between.
 
 ## Adding a workflow
 
-Four edits, and the checks will tell you if you miss one:
+Two edits per language, and `check:api` will tell you if you miss one:
 
-1. `docs/zh/workflows/<slug>.md` and `docs/en/workflows/<slug>.md`
-2. An entry in **both** `api/workflows.zh.json` and `api/workflows.en.json`
-3. Sidebar entries for both languages in `config.ts`
-4. `bun run check:api`
+1. `docs/<lang>/workflows/<slug>.md`
+2. An entry in `api/workflows.<lang>.json` whose `path` is `<lang>/workflows/<slug>`
+3. `bun run check:api`
+
+Write it in one language and ship it — the other language can follow later, or
+never. There is no sidebar and no nav entry to maintain: the card grid on the home
+page is the index, and it is driven by the payload.
+
+**Drafts.** Name the file `_<slug>.md` while it is unfinished. `bun run dev`
+renders it so you can preview, `bun run build` drops it, and `check:api` does not
+ask for a payload entry. The reverse is enforced too: an entry may not point at a
+draft, since that would be a card leading to a 404. Rename when it is ready.
 
 ## Bilingual contract
 
-Both languages sit under a prefix (`/zh/`, `/en/`) rather than one at the root.
-That keeps pages symmetric with the API (`workflows.zh.json` / `workflows.en.json`),
-and a third language needs no restructuring.
+Both languages sit under a prefix (`/zh/`, `/en/`) rather than one at the root, so
+adding a third needs no restructuring.
 
-The language switcher only rewrites the leading path segment, so
-`/zh/workflows/pdf-extract` becomes `/en/workflows/pdf-extract` and the reader stays
-on the same page. This only works while the trees stay symmetric, which is why
-`check:api` fails the build on a page that exists in one language only.
+**The trees do not have to match.** A workflow is written in one language and
+translated whenever it is translated, so `check:api` compares each language only
+against its own payload. Across languages it enforces exactly one thing: for an
+`id` both of them carry, `status` must agree — otherwise a workflow shows a
+"verified" badge in one language and not the other.
+
+The language switcher only rewrites the leading path segment
+(`/zh/workflows/pdf-extract` → `/en/workflows/pdf-extract`), which is only safe
+where both trees carry the page. So it is **hidden on workflow detail pages** and
+shown everywhere else — home, the workflow index and the API page are always
+bilingual.
 
 ## API
 
@@ -84,16 +99,22 @@ bun run check:api          # data + structural integrity
 bun run preview & bun run check:responsive   # layout across breakpoints
 ```
 
-`check:api` catches the two languages drifting apart, `status` disagreeing between
-them, `path` pointing at a missing page, links hardcoded in `config.ts` that
-resolve to nothing (VitePress only validates links written in markdown), and pages
-that exist in one language only.
+`check:api` keeps each language consistent with its own payload — every workflow
+page has an entry, every entry's `path` points at a page that exists, no duplicate
+ids, no empty fields, no entry pointing at a draft. Plus `status` agreeing across
+languages for a shared id, and links hardcoded in `config.ts` that resolve to
+nothing (VitePress only validates links written in markdown).
 
-`check:responsive` drives a real browser across eight viewports and asserts exactly
-one language switcher is visible, nothing overflows horizontally, all six cards
-render inside the viewport, and dark-mode contrast stays within WCAG AA. It exists
-because a real bug shipped that eyeballing two wide viewports could not catch —
-see `CONVENTIONS.md`.
+`check:responsive` drives a real browser across eight viewports and asserts the
+expected number of language switchers is visible (one, or none on workflow detail
+pages), nothing overflows horizontally, every card in the payload renders inside
+the viewport, and dark-mode contrast stays within WCAG AA. It exists because a real
+bug shipped that eyeballing two wide viewports could not catch — see
+`CONVENTIONS.md`.
+
+Start `preview` **after** `build`, and do not rebuild while it runs: it caches the
+file list at startup, so a rebuild underneath it makes it serve stale HTML and then
+crash on a missing chunk.
 
 ## Deployment
 
