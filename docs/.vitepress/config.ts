@@ -50,6 +50,9 @@ export default withMermaid(
       ],
     ],
 
+    // No workflow entry in the nav and no sidebar: both were hand-written lists
+    // that had to be edited in lockstep with every page added, and the card grid
+    // on the home page already is that index.
     locales: {
       zh: {
         label: '简体中文',
@@ -59,30 +62,12 @@ export default withMermaid(
         themeConfig: {
           nav: [
             { text: '首页', link: '/zh/' },
-            { text: '工作流', link: '/zh/workflows/' },
             { text: '接口', link: '/zh/api' },
           ],
-          sidebar: {
-            '/zh/workflows/': [
-              {
-                text: '工作流',
-                items: [
-                  { text: '全部工作流', link: '/zh/workflows/' },
-                  { text: '小红书内容爬虫', link: '/zh/workflows/xiaohongshu' },
-                  { text: '飞书日报生成器', link: '/zh/workflows/feishu-daily' },
-                  { text: '竞品价格监控', link: '/zh/workflows/price-monitor' },
-                  { text: 'GitHub Issue 分析', link: '/zh/workflows/github-issues' },
-                  { text: 'PDF 批量提取器', link: '/zh/workflows/pdf-extract' },
-                  { text: '邮件自动回复', link: '/zh/workflows/mail-reply' },
-                ],
-              },
-            ],
-          },
           outline: { level: [2, 3], label: '本页目录' },
           docFooter: { prev: '上一页', next: '下一页' },
           lastUpdatedText: '最后更新',
           returnToTopLabel: '回到顶部',
-          sidebarMenuLabel: '菜单',
           darkModeSwitchLabel: '主题',
           lightModeSwitchTitle: '切换到浅色模式',
           darkModeSwitchTitle: '切换到深色模式',
@@ -98,25 +83,8 @@ export default withMermaid(
         themeConfig: {
           nav: [
             { text: 'Home', link: '/en/' },
-            { text: 'Workflows', link: '/en/workflows/' },
             { text: 'API', link: '/en/api' },
           ],
-          sidebar: {
-            '/en/workflows/': [
-              {
-                text: 'Workflows',
-                items: [
-                  { text: 'All workflows', link: '/en/workflows/' },
-                  { text: 'Xiaohongshu content scraper', link: '/en/workflows/xiaohongshu' },
-                  { text: 'Feishu daily report generator', link: '/en/workflows/feishu-daily' },
-                  { text: 'Competitor price monitor', link: '/en/workflows/price-monitor' },
-                  { text: 'GitHub Issue analysis', link: '/en/workflows/github-issues' },
-                  { text: 'PDF batch extractor', link: '/en/workflows/pdf-extract' },
-                  { text: 'Automatic email replies', link: '/en/workflows/mail-reply' },
-                ],
-              },
-            ],
-          },
           outline: { level: [2, 3] },
         },
       },

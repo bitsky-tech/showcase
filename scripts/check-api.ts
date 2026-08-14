@@ -1,18 +1,22 @@
 /**
  * Validates the hand-written API payloads under docs/public/api/.
  *
- * The payloads are hand-edited on purpose (six entries, no build step), so the
- * guardrails live here instead. It catches the three mistakes that are actually
- * likely:
+ * The payloads are hand-edited on purpose (no build step), so the guardrails
+ * live here instead. The two languages are deliberately NOT required to match:
+ * a workflow is written in Chinese first and translated whenever it is
+ * translated, so demanding symmetry only ever blocked the Chinese half. Each
+ * language is checked against itself, and the pair only where disagreeing is
+ * always a mistake:
  *
- *   1. Editing one language and forgetting the other -- id sets and their order
- *      must match, because the order drives the card grid on the home page.
- *   2. Letting `status` drift between languages, which would show a "verified"
- *      badge in Chinese and not in English.
- *   3. Pointing `path` at a page that does not exist, which turns a card click
- *      into a 404. GitHub Pages answers a miss with a 9KB HTML body, so this is
- *      easy to ship unnoticed.
- *   4. Omitting one of goal/requirement/output. The desktop app renders these
+ *   1. Every workflow page appears in its own language's payload, and every
+ *      entry's `path` points at a page that exists. Both directions matter:
+ *      overwriting an entry when meaning to append one drops the overwritten
+ *      workflow off the home page, and a stale `path` turns a card click into a
+ *      404 -- GitHub Pages answers a miss with a 9KB HTML body, so that is easy
+ *      to ship unnoticed.
+ *   2. Letting `status` drift between languages *for an id both of them carry*,
+ *      which would show a "verified" badge in Chinese and not in English.
+ *   3. Omitting one of goal/requirement/output. The desktop app renders these
  *      three directly in its preview dialog, so a missing one leaves a blank row
  *      there rather than failing anywhere visible here.
  */
@@ -111,19 +115,19 @@ if (!advertised) {
   }
 }
 
-// --- the two languages must stay in lockstep --------------------------------
+// --- the two languages only have to agree where they overlap ----------------
+// Which entries exist, and in what order, is each language's own business: the
+// order drives that language's card grid, and a workflow may well be published
+// in Chinese months before anyone translates it.
 const zh = loadLang('zh')
 const en = loadLang('en')
 
-if (zh.length !== en.length) {
-  fail(`entry count differs: zh has ${zh.length}, en has ${en.length}`)
-} else {
-  zh.forEach((z, i) => {
-    const e = en[i]
-    if (e === undefined) return
-    if (z.id !== e.id) fail(`order differs at [${i}]: zh '${z.id}' vs en '${e.id}'`)
-    if (z.status !== e.status) fail(`status differs for '${z.id}': zh '${z.status}' vs en '${e.status}'`)
-  })
+const enById = new Map(en.map((e) => [e.id, e]))
+for (const z of zh) {
+  const e = enById.get(z.id)
+  if (e !== undefined && z.status !== e.status) {
+    fail(`status differs for '${z.id}': zh '${z.status}' vs en '${e.status}'`)
+  }
 }
 
 const dupes = (list: Workflow[], lang: string) => {
@@ -154,25 +158,26 @@ for (const link of configLinks) {
   }
 }
 
-// --- the two language trees stay symmetric --------------------------------
-// A page added in one language and forgotten in the other leaves the language
-// switcher pointing at a 404, since LangSwitch only rewrites the leading segment.
-function pagesOf(lang: string): string[] {
-  const base = join(DOCS, lang)
-  const out: string[] = []
-  const walk = (dir: string, prefix: string) => {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      if (entry.isDirectory()) walk(join(dir, entry.name), `${prefix}${entry.name}/`)
-      else if (entry.name.endsWith('.md')) out.push(prefix + entry.name)
-    }
+// --- every workflow page is reachable from its own payload ------------------
+// checkEntry already covers the other direction (an entry whose `path` points at
+// nothing). This catches the opposite slip: overwriting an entry when meaning to
+// append one, which leaves the overwritten workflow with a page that no card
+// links to any more. Purely within one language, so translation lag never trips
+// it. `index.md` is the grid itself, not a workflow.
+function checkListed(lang: string, entries: Workflow[]): string[] {
+  const dir = join(DOCS, lang, 'workflows')
+  if (!existsSync(dir)) return []
+  const listed = new Set(entries.map((e) => e.path))
+  const pages = readdirSync(dir)
+    .filter((name) => name.endsWith('.md') && name !== 'index.md')
+    .map((name) => `${lang}/workflows/${name.slice(0, -'.md'.length)}`)
+  for (const page of pages) {
+    if (!listed.has(page)) fail(`docs/${page}.md has no entry in workflows.${lang}.json`)
   }
-  if (existsSync(base)) walk(base, '')
-  return out.sort()
+  return pages
 }
-const zhPages = pagesOf('zh')
-const enPages = pagesOf('en')
-for (const page of zhPages) if (!enPages.includes(page)) fail(`zh/${page} has no en counterpart`)
-for (const page of enPages) if (!zhPages.includes(page)) fail(`en/${page} has no zh counterpart`)
+const zhPages = checkListed('zh', zh)
+const enPages = checkListed('en', en)
 
 // --- report ----------------------------------------------------------------
 if (errors.length > 0) {
@@ -181,6 +186,7 @@ if (errors.length > 0) {
   process.exit(1)
 }
 console.log(
-  `check-api: ok -- ${zh.length} workflows x 2 languages, ${seenLinks.size} config links resolve, ` +
-    `${zhPages.length} pages symmetric across zh/en`,
+  `check-api: ok -- ${zh.length} zh / ${en.length} en workflows, ` +
+    `${zhPages.length} zh / ${enPages.length} en pages all listed, ` +
+    `${seenLinks.size} config links resolve`,
 )
