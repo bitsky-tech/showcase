@@ -30,16 +30,47 @@ from responses. Two payoffs: a client never guesses a path, so it never hits the
 ~9 KB HTML 404 that static hosting returns (which surfaces as an opaque JSON parse
 error); and moving domain or CDN touches one place.
 
-**Manifests store repo-relative paths.** `"path": "zh/workflows/xiaohongshu"`, not an
-absolute URL. Clients join `base + path`.
+**Manifests store repo-relative paths.** `"path": "zh/workflows/price-monitor"`, not
+an absolute URL. Clients join `base + path`.
 
-**Array order is part of the contract.** It drives card order on the home page and
-mirrors the desktop app's own order, which is derived from a hardcoded id list
-(`DEFAULT_MARKET_CARD_IDS`) rather than alphabetical — so sorting the JSON would
-silently change the presentation.
+**Array order is part of the contract.** It drives card order both on the home page
+and in the desktop app, which renders the array as it arrives — so sorting the JSON
+alphabetically would silently change the presentation in two places.
 
 **Adding a field is safe; renaming or removing one is breaking.** Clients ignore
-unknown fields.
+unknown fields, so a new one costs nothing. Removing one has to be done from the
+client end first: its schema validates the payload, and a field it still requires
+but no longer receives fails the whole parse. See *Every field is a field somebody
+renders* below.
+
+## A comment is not evidence
+
+The payload carried `goal`, `requirement` and `output` for two days — one-line
+answers to "what is this for / what do I need / what do I get". Added 2026-08-12
+alongside the desktop client's data layer, removed 2026-08-14, once it turned out
+**nothing had ever rendered them**: `git log -S'workflow.goal'` over the client's
+dialog component returns no commits at all.
+
+The card shows `name`, `desc`, `domain` and `status`. The preview dialog embeds
+this site's own page instead of composing one out of fields, so it needs only
+`path` and `name` — and it has done that since its first commit. This site's grid
+reads the same six.
+
+What kept the three alive was a comment in the client's schema stating the dialog
+rendered them, and a matching one here saying a missing field would leave a blank
+row there. Both described a plan; neither described the code that shipped. Nothing
+failed, because nothing was reading the fields to begin with — the checks only
+confirmed they were present and non-empty, which they always were.
+
+So: **before writing a check that enforces a field, find the line that reads it.**
+A comment naming a consumer is a claim about code, and the way to test that claim
+is `git log -S` on the consumer, not a re-read of the comment.
+
+Removal order matters, and it is the opposite of what feels natural: the client's
+zod schema required all three, so deleting them here first would have failed
+validation in every shipped build. The client dropped them from its schema first
+(`.passthrough()` meant it ignored the ones still arriving), and only then did the
+payload stop carrying them.
 
 ## The languages are allowed to diverge
 

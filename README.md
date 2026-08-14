@@ -12,10 +12,14 @@ so a card and a client can never disagree about what exists.
 
 ```bash
 bun install
-bun run dev        # http://localhost:5173  (add --host to expose on the LAN)
+bun run dev        # http://localhost:5273  (add --host to expose on the LAN)
 bun run build
-bun run preview    # serves the built site on :4173
+bun run preview    # serves the built site on :4273
 ```
+
+Both ports are set explicitly in `package.json`, off Vite's defaults (5173 /
+4173) so a stray dev server from another project cannot answer — or be answered
+by — these.
 
 ## Layout
 
@@ -78,9 +82,9 @@ bilingual.
 | Workflows (en) | `https://showcase.bridgic.ai/api/workflows.en.json` |
 
 Clients hardcode only `index.json` and discover the rest from its response.
-Fields map one-to-one onto the desktop app's `MarketCard` (`name`, `desc`,
-`domain`, `status`), plus `id` and `path`. Full reference on the site itself at
-`/zh/api` and `/en/api`.
+Six fields, each of them rendered: `name` / `desc` / `domain` / `status` on the
+card, `path` for the page behind it, `id` as the stable key. Full reference on the
+site itself at `/zh/api` and `/en/api`.
 
 Two rules that are easy to get wrong:
 

@@ -7,10 +7,7 @@
       "desc": "演示基于飞书多维表格自动化管理“软件项目”的一个案例，可以通过agent上报bug，也支持自动扫描分析bug。还演示了自动拆分子agent的能力。",
       "domain": "IT系统集成",
       "status": "verified",
-      "path": "zh/workflows/project-management-automation",
-      "goal": "项目管理长任务自动化、提效",
-      "requirement": "有飞书账号；在飞书开放平台创建应用",
-      "output": "飞书表格保存任务记录；产出Bug分析报告"
+      "path": "zh/workflows/project-management-automation"
     },
     {
       "id": "e-commerce-product-scraper",
@@ -18,10 +15,7 @@
       "desc": "演示从天猫超市抓取某一类商品信息、自动化下载商品图片并批量存入excel文件中",
       "domain": "浏览器自动化",
       "status": "verified",
-      "path": "zh/workflows/e-commerce-product-scraper",
-      "goal": "自动化抓取天猫超市上指定搜索词的商品信息",
-      "requirement": "需要登录天猫超市账号",
-      "output": "生成包含商品信息的excel表格"
+      "path": "zh/workflows/e-commerce-product-scraper"
     },
     {
       "id": "priceMonitor",
@@ -29,10 +23,7 @@
       "desc": "定时监控竞品网站价格变动并发送告警",
       "domain": "浏览器自动化",
       "status": "verified",
-      "path": "zh/workflows/price-monitor",
-      "goal": "在竞品调价时第一时间发现并告警",
-      "requirement": "商品页地址列表；页面结构特殊时需指定价格选择器",
-      "output": "超过阈值的变动告警，以及可回溯趋势的历史快照"
+      "path": "zh/workflows/price-monitor"
     },
     {
       "id": "githubIssues",
@@ -40,10 +31,7 @@
       "desc": "自动分析仓库 Issue 趋势，生成周报",
       "domain": "API 集成",
       "status": "new",
-      "path": "zh/workflows/github-issues",
-      "goal": "看清一周内的问题集中在哪些方向、哪类在放量",
-      "requirement": "仓库列表；具备读取权限的 GitHub token",
-      "output": "含新增/关闭/停滞数与趋势异常的周报"
+      "path": "zh/workflows/github-issues"
     },
     {
       "id": "pdfExtract",
@@ -51,10 +39,7 @@
       "desc": "从多个 PDF 中提取结构化数据到 Excel",
       "domain": "文件处理",
       "status": "verified",
-      "path": "zh/workflows/pdf-extract",
-      "goal": "把版式相对固定的批量文档转成可直接分析的表格",
-      "requirement": "输入目录；由关键字锚点与相对位置构成的字段模板",
-      "output": "一行一文档的 Excel，校验失败的行单独标记待复核"
+      "path": "zh/workflows/pdf-extract"
     },
     {
       "id": "mailReply",
@@ -62,10 +47,7 @@
       "desc": "根据规则自动分类和回复常见邮件",
       "domain": "邮件集成",
       "status": "new",
-      "path": "zh/workflows/mail-reply",
-      "goal": "让问法重复的邮件不再占用人工时间",
-      "requirement": "意图与模板的映射；允许自动发送的发件域名单",
-      "output": "自动发送的回复或待确认草稿，并留下处置记录"
+      "path": "zh/workflows/mail-reply"
     }
   ]
 }
