@@ -29,7 +29,7 @@ Fields map one-to-one onto the desktop app's `MarketCard`, so no transformation 
 
 | Field | Type | Description |
 |---|---|---|
-| `id` | `string` | Stable identifier, identical across languages |
+| `id` | `string` | Stable identifier; one workflow keeps the same `id` in both languages |
 | `name` | `string` | Card title |
 | `desc` | `string` | Card description |
 | `domain` | `string` | Category tag |
