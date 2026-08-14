@@ -10,6 +10,13 @@
 
 ## 成品展示
 
+本教程产出的两个自动化工作流，可直接下载并导入进Bridgic Agent，作为参考：
+- [上报 Bridgic Agent 开发任务](<./downloads/上报 Bridgic Agent 开发任务.amphi-workflow>)
+- [自动化 Bug 分析报告 - BridgicAgent项目](<./downloads/自动化 Bug 分析报告 - BridgicAgent项目.amphi-workflow>)
+
+**注意**：由于每个人的电脑桌面运行环境不同，这两个工作流未必能在导入后直接运行。仅作为参考，你可以参考它们制作自己真正需要的工作流。
+如果你一定要运行这两个工作流，可以在运行碰到问题后，要求Bridgic Agent根据你的实际运行环境修复它们即可。
+
 在本教程结束后，你将会看到，两个成功构建的工作流：
 
 ![工作流截图workflow-card-1.webp](./pma-images/workflow-card-1.webp)
@@ -32,7 +39,9 @@
 
 ### 准备工作
 
-准备你自己的飞书账号，创建一个多维表格出来，用来保存和展示开发任务（新特性开发或Bug记录）。如下：
+准备你自己的飞书账号，创建一个多维表格出来，用来保存和展示开发任务（新特性开发或Bug记录）。
+
+注：创建多维表格其实也可以让Bridgic Agent来做，当因为初次连接飞书表格可能会有些麻烦，并且这是个一次性的操作，这里建议先用手工创建这个多维表格。如下：
 
 ![工作流截图table-creation.webp](./pma-images/table-creation.webp)
 
