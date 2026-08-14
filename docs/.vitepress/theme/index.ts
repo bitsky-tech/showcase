@@ -4,8 +4,11 @@ import type { Theme } from 'vitepress'
 // is Plus Jakarta Sans. This is VitePress's own entry point for custom fonts,
 // not a workaround.
 import DefaultTheme from 'vitepress/theme-without-fonts'
-import { h } from 'vue'
+import { useRoute } from 'vitepress'
+import mediumZoom from 'medium-zoom'
+import { h, nextTick, onMounted, watch } from 'vue'
 
+import EmbedVideo from './EmbedVideo.vue'
 import LangSwitch from './LangSwitch.vue'
 import WorkflowGrid from './WorkflowGrid.vue'
 import './custom.css'
@@ -25,5 +28,21 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('WorkflowGrid', WorkflowGrid)
+    app.component('EmbedVideo', EmbedVideo)
+  },
+  setup() {
+    // Click-to-zoom for content images. Images wrapped in a link are excluded:
+    // there the click is a deliberate navigation. VitePress is an SPA, so the
+    // zoom must be re-attached after each route change, and only after nextTick
+    // -- the new page's images don't exist in the DOM before that.
+    const route = useRoute()
+    const attachZoom = () => {
+      mediumZoom('.vp-doc :not(a) > img', { background: 'var(--vp-c-bg)' })
+    }
+    onMounted(attachZoom)
+    watch(
+      () => route.path,
+      () => nextTick(attachZoom),
+    )
   },
 } satisfies Theme
