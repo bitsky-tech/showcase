@@ -8,6 +8,7 @@ import { useRoute } from 'vitepress'
 import mediumZoom from 'medium-zoom'
 import { h, nextTick, onMounted, watch } from 'vue'
 
+import EmbedVideo from './EmbedVideo.vue'
 import LangSwitch from './LangSwitch.vue'
 import WorkflowGrid from './WorkflowGrid.vue'
 import './custom.css'
@@ -27,6 +28,7 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('WorkflowGrid', WorkflowGrid)
+    app.component('EmbedVideo', EmbedVideo)
   },
   setup() {
     // Click-to-zoom for content images. Images wrapped in a link are excluded:

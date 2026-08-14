@@ -218,3 +218,14 @@ html.bridgic-embed .VPDoc .content {
 .medium-zoom-image--opened {
   z-index: 999;
 }
+
+/* Local demo videos written as raw `<video controls>` in markdown. Same frame
+   treatment as EmbedVideo players so all media on a page looks uniform. */
+.vp-doc video {
+  display: block;
+  width: 100%;
+  margin: 16px 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-alt);
+}
