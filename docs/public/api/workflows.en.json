@@ -2,28 +2,6 @@
   "lang": "en",
   "workflows": [
     {
-      "id": "project-management-automation",
-      "name": "Feishu Bitable project management tutorial",
-      "desc": "A practical example of automating software project management with Feishu Bitable: agents can report bugs, scheduled runs can scan and analyze them, and sub-agents can be split out automatically.",
-      "domain": "IT systems integration",
-      "status": "verified",
-      "path": "en/workflows/project-management-automation",
-      "goal": "Automate and streamline long-running project-management work",
-      "requirement": "A Feishu account and an application created in the Feishu Open Platform",
-      "output": "Task records stored in Feishu Bitable and a bug analysis report"
-    },
-    {
-      "id": "e-commerce-product-scraper",
-      "name": "Tmall Supermarket product scraper tutorial",
-      "desc": "Demonstrates how to scrape product information from a Tmall Supermarket category and automatically download product images.",
-      "domain": "Browser automation",
-      "status": "verified",
-      "path": "en/workflows/e-commerce-product-scraper",
-      "goal": "Automatically retrieve product information for a specified Tmall Supermarket search term",
-      "requirement": "A Tmall Supermarket account for signing in",
-      "output": "An Excel spreadsheet containing product information"
-    },
-    {
       "id": "priceMonitor",
       "name": "Competitor price monitor",
       "desc": "Monitor competitor-site prices and send alerts when they change",
