@@ -5,9 +5,6 @@
 
 ## 成品展示
 
-
-## 工作流构建教程
-
 在本教程结束后，你将会看到一个成功构建的工作流：
 
 ![工作流截图workflow-card.webp](./e-commerce-images/workflow-card.webp)
@@ -24,6 +21,8 @@
 你还会看到，运行该工作后产出的excel文件（里面存放着从天猫超市采集到的商品信息列表）：
 
 ![工作流截图running-excel.webp](./e-commerce-images/running-excel.webp)
+
+## 工作流构建教程
 
 ### 准备工作
 
