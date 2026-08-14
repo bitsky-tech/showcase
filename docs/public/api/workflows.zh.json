@@ -15,7 +15,7 @@
     {
       "id": "e-commerce-product-scraper",
       "name": "天猫超市商品抓取教程",
-      "desc": "每日自动汇总团队飞书消息，生成结构化日报",
+      "desc": "演示从天猫超市抓取某一类商品信息并自动化下载商品图片",
       "domain": "浏览器自动化",
       "status": "verified",
       "path": "zh/workflows/e-commerce-product-scraper",

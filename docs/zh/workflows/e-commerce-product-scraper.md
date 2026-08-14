@@ -20,7 +20,7 @@
 
 ![工作流截图new-task.png](./e-commerce-images/new-task.png)
 
-Brdgic Agent对于需求中不明确的描述会主动和你确认（需求澄清）：
+Bridgic Agent对于需求中不明确的描述会主动和你确认（需求澄清）：
 
 ![工作流截图clarify-1.png](./e-commerce-images/clarify-1.png)
 
@@ -28,13 +28,13 @@ Brdgic Agent对于需求中不明确的描述会主动和你确认（需求澄�
 
 ![工作流截图clarify-3.png](./e-commerce-images/clarify-3.png)
 
-Brdgic Agent会提示你选择或确认任务的验收标准：
+Bridgic Agent会提示你选择或确认任务的验收标准：
 
 ![工作流截图check-condition-1.png](./e-commerce-images/check-condition-1.png)
 
 ![工作流截图check-condition-2.png](./e-commerce-images/check-condition-2.png)
 
-这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Brdgic Agent会根据你的评论进行相应的修改。
+这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Bridgic Agent会根据你的评论进行相应的修改。
 
 ![工作流截图task-req-1.png](./e-commerce-images/task-req-1.png)
 
@@ -42,7 +42,7 @@ Brdgic Agent会提示你选择或确认任务的验收标准：
 
 ![工作流截图task-req-2.png](./e-commerce-images/task-req-2.png)
 
-至此任务说明书已经确认。接下来请遵照Brdgic Agent的引导进行操作。
+至此任务说明书已经确认。接下来请遵照Bridgic Agent的引导进行操作。
 
 Bridgic Agent发现天猫超市需要用户登录，所以弹框告知用户来处理：
 

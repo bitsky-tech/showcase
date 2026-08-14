@@ -49,17 +49,17 @@
 
 ![工作流截图new-task-insertion.png](./pma-images/new-task-insertion.png)
 
-Brdgic Agent对于需求中不明确的描述会主动和你确认（需求澄清）：
+Bridgic Agent对于需求中不明确的描述会主动和你确认（需求澄清）：
 
 ![工作流截图ask-human-1.png](./pma-images/ask-human-1.png)
 
 ![工作流截图ask-human-2.png](./pma-images/ask-human-2.png)
 
-Brdgic Agent还会让你选择或确认一个任务验收标准：
+Bridgic Agent还会让你选择或确认一个任务验收标准：
 
 ![工作流截图check-condition-1.png](./pma-images/check-condition-1.png)
 
-这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Brdgic Agent会根据你的评论进行相应的修改。
+这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Bridgic Agent会根据你的评论进行相应的修改。
 
 ![工作流截图task-req-1.png](./pma-images/task-req-1.png)
 
@@ -67,7 +67,7 @@ Brdgic Agent还会让你选择或确认一个任务验收标准：
 
 ![工作流截图task-req-2.png](./pma-images/task-req-2.png)
 
-至此任务说明书已经确认。接下来请遵照Brdgic Agent的引导进行操作。
+至此任务说明书已经确认。接下来请遵照Bridgic Agent的引导进行操作。
 
 ![工作流截图building-1.png](./pma-images/building-1.png)
 
@@ -81,7 +81,7 @@ Brdgic Agent还会让你选择或确认一个任务验收标准：
 
 ![工作流截图create-workflow-sucess.png](./pma-images/create-workflow-sucess.png)
 
-现在你可以在Brdgic Agent的工作流页面中发现一个新创建出来的工作流卡片，如下：
+现在你可以在Bridgic Agent的工作流页面中发现一个新创建出来的工作流卡片，如下：
 
 ![工作流截图workflow-card-1.png](./pma-images/workflow-card-1.png)
 
@@ -106,19 +106,19 @@ Brdgic Agent还会让你选择或确认一个任务验收标准：
 
 ![工作流截图new-task-bug.png](./pma-images/new-task-bug.png)
 
-Brdgic Agent主动向你进行需求澄清：
+Bridgic Agent主动向你进行需求澄清：
 
 ![工作流截图clarify-1.png](./pma-images/clarify-1.png)
 
 ![工作流截图clarify-2.png](./pma-images/clarify-2.png)
 
-Brdgic Agent提示你选择任务的验收标准：
+Bridgic Agent提示你选择任务的验收标准：
 
 ![工作流截图check-condition-a.png](./pma-images/check-condition-a.png)
 
 ![工作流截图check-condition-b.png](./pma-images/check-condition-b.png)
 
-这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Brdgic Agent会根据你的评论进行相应的修改。
+这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Bridgic Agent会根据你的评论进行相应的修改。
 
 ![工作流截图task-req-a.png](./pma-images/task-req-a.png)
 
@@ -135,7 +135,7 @@ Brdgic Agent提示你选择任务的验收标准：
 
 ![工作流截图create-workflow-2-sucess.png](./pma-images/create-workflow-2-sucess.png)
 
-现在你可以在Brdgic Agent的工作流页面中发现一个新创建出来的工作流卡片，如下：
+现在你可以在Bridgic Agent的工作流页面中发现一个新创建出来的工作流卡片，如下：
 
 ![工作流截图workflow-card-2.png](./pma-images/workflow-card-2.png)
 
@@ -159,7 +159,7 @@ Brdgic Agent提示你选择任务的验收标准：
 
 ![工作流截图scheduled-run-display.png](./pma-images/scheduled-run-display.png)
 
-我们看到它的执行过程启动了一个**子agent**。鉴于当前执行的这个任务比较特殊，它有一个“扫描代码库并分析bug”的子过程，非常适合使用子agent来完成。因此Bridgic Agent在这个工作流中自动拆分出了一个子agent来完成这个字过程。如下是子agent的执行过程：
+我们看到它的执行过程启动了一个**子agent**。鉴于当前执行的这个任务比较特殊，它有一个“扫描代码库并分析bug”的子过程，非常适合使用子agent来完成。因此Bridgic Agent在这个工作流中自动拆分出了一个子agent来完成这个子过程。如下是子agent的执行过程：
 
 ![工作流截图sub-agent.png](./pma-images/sub-agent.png)
 
@@ -188,6 +188,6 @@ Brdgic Agent提示你选择任务的验收标准：
 ## 注意事项
 
 - 用户本地的环境不同，构建过程可能也会碰到很多差异。可能需要根据具体情况来合理处理。尤其是这个工作流底层需要的lark-cli的安装和配置过程，具体的过程体验取决于环境和模型能力。建议使用好模型来构建工作流，然后可以使用次一些的模型来运行它。
-- 构建过程中如果发生意外情况，不要慌张，可以随时向agent提问，请它提供更多信息或者让它给建议。在中间过程可以把碰到的问题/疑问都抛给Brdgic Agent。
-- Bridgic Agent对于工作流的构建，成功率非常高。只要需求描述清晰且可行，通常能够一次性成功。但偶尔出现失败的情况，也不要紧，可以让Brdgic Agent修复工作流。修复时告诉它你碰到的异常情况。
-- 工作流构建出来之后，并非一成不变，Brdgic Agent提供了请打的工作流修改能力。如果你需求有所变动，随时告诉Brdgic Agent：“修复 @XXX工作流，我要XXXX”。
+- 构建过程中如果发生意外情况，不要慌张，可以随时向agent提问，请它提供更多信息或者让它给建议。在中间过程可以把碰到的问题/疑问都抛给Bridgic Agent。
+- Bridgic Agent对于工作流的构建，成功率非常高。只要需求描述清晰且可行，通常能够一次性成功。但偶尔出现失败的情况，也不要紧，可以让Bridgic Agent修复工作流。修复时告诉它你碰到的异常情况。
+- 工作流构建出来之后，并非一成不变，Bridgic Agent提供了强大的工作流修改能力。如果你需求有所变动，随时告诉Bridgic Agent：“修复 @XXX工作流，我要XXXX”。
