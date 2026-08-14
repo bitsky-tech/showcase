@@ -89,12 +89,21 @@ jobs:
           check /                        200 text/html
           check /zh/                     200 text/html
           check /en/                     200 text/html
-          check /zh/workflows/xiaohongshu 200 text/html
-          check /en/workflows/mail-reply  200 text/html
           check /api/index.json          200 application/json
           check /api/workflows.zh.json   200 application/json
           check /api/workflows.en.json   200 application/json
           check /assets/logo.svg         200 image/svg+xml
+
+          # A workflow page per language, read out of the payload rather than named
+          # here. Naming one meant the smoke test broke the moment that page was
+          # renamed or deleted -- which is what happened when the demo entries were
+          # replaced by real tutorials, failing this step on two deploys in a row
+          # while the site itself was published fine. The payloads were just checked
+          # above, so a failure here is about the page, not the fetch.
+          for lang in zh en; do
+            page=$(curl -s --max-time 20 "$base/api/workflows.$lang.json" | jq -r '.workflows[0].path')
+            check "/$page" 200 text/html
+          done
 
           # Status codes alone cannot catch a base-path mismatch: the HTML still
           # answers 200 while every /assets/... reference inside it 404s, leaving a

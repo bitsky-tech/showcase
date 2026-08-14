@@ -182,16 +182,22 @@
 }
 
 /* Embedded mode, enabled by `?bridgic-embed=1` (see the head script in config.ts).
-   The desktop app opens a single workflow page inside a dialog, where the site's
-   own navigation, sidebar and outline are all dead weight -- the surrounding app
-   already provides that navigation. The document footer goes too: prev/next links
-   would let someone wander out of the workflow they clicked.
+   The desktop app opens a single workflow page inside a dialog, so the site's own
+   navigation and sidebar are dead weight -- the dialog is already scoped to one
+   workflow. The document footer goes too: prev/next links would let someone wander
+   out of the workflow they clicked.
+
+   The outline (`.VPDocAside`) is deliberately NOT hidden. It was, on the reasoning
+   that the surrounding app provides navigation -- it does not: the dialog is a
+   title bar, the frame, and one button. That was survivable while every page was a
+   short demo, but the tutorials that replaced them run past 190 lines with dozens
+   of screenshots, and inside a dialog there is no browser chrome to fall back on.
+   The outline is the only way to see the shape of the page or jump within it.
 
    Absent the parameter nothing here applies, so ordinary visitors see no change. */
 html.bridgic-embed .VPNav,
 html.bridgic-embed .VPLocalNav,
 html.bridgic-embed .VPSidebar,
-html.bridgic-embed .VPDocAside,
 html.bridgic-embed .VPDocFooter,
 html.bridgic-embed .VPSkipLink {
   display: none !important;
@@ -209,6 +215,16 @@ html.bridgic-embed .VPDoc .container,
 html.bridgic-embed .VPDoc .content {
   max-width: 100% !important;
   margin: 0 !important;
+}
+
+/* VitePress only reveals the outline at 1280px, and the dialog frame is 1120px
+   wide -- so simply not hiding it leaves a zero-width element in the DOM. Lower
+   the threshold instead of dropping it entirely: below 1000px the outline would
+   eat the room the screenshots need, and the page reads fine as one column. */
+@media (min-width: 1000px) {
+  html.bridgic-embed .VPDoc .aside {
+    display: block !important;
+  }
 }
 
 /* medium-zoom's overlay and zoomed image default to the page stacking order,
