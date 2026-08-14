@@ -72,6 +72,42 @@ validation in every shipped build. The client dropped them from its schema first
 (`.passthrough()` meant it ignored the ones still arriving), and only then did the
 payload stop carrying them.
 
+## Bypassing a check means owning what it was doing
+
+Workflow files (`.amphi-workflow`) are offered for download from two tutorials.
+The obvious spelling — a markdown link to a file sitting next to the page —
+fails the build, and the error is actively misleading:
+
+```
+Found dead link ./downloads/%E4%B8%8A%E6%8A%A5...amphi-workflow
+[vitepress] 3 dead link(s) found.
+```
+
+The files were **committed and present**. VitePress resolves a markdown link
+against its page routes unless the extension is one it treats as an asset;
+`.amphi-workflow` is not, so each link was read as a route, matched no page, and
+`ignoreDeadLinks: false` turned that into a failed build. Reproduced by creating
+the files and building: identical errors. Reading "dead link" as "file missing"
+sends you looking in the wrong place — the fix is the *link*, not the file.
+
+What works: the file in `docs/public/` (copied to the site root untouched, no
+pipeline to confuse), linked with a raw `<a>` tag, carrying `download` — the
+server recognises no extension here and sends an empty `Content-Type`, so a
+browser may otherwise render the bytes instead of saving them.
+
+The part worth generalising is what raw HTML costs. The dead-link check only
+parses markdown link syntax, so switching to `<a>` gets the build passing by
+**opting out of the check**, not by satisfying it. That trade is usually invisible
+and always one-way: a typo in that href would now build clean, deploy clean, and
+404 on click — strictly worse than the failure it replaced, which at least
+announced itself. So `check:api` re-imposes the guarantee: every
+`href="/downloads/..."` must exist under `docs/public` and must carry `download`.
+
+**When you route around a check, you inherit its job.** Three of this repo's
+checks now exist for exactly that reason — links hardcoded in `config.ts`, pages
+absent from the payload, and these download links — each one covering a place the
+framework stopped looking.
+
 ## The languages are allowed to diverge
 
 Both languages live under a prefix (`/zh/`, `/en/`) instead of one at the root, so
