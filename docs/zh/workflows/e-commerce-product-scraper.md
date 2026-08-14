@@ -13,7 +13,10 @@
 ![工作流截图workflow-card.webp](./e-commerce-images/workflow-card.webp)
 
 该工作流可直接下载并导入进你的Bridgic Agent，作为参考：
-- [天猫超市休闲零食商品列表采集并导出 Excel](<./downloads/天猫超市休闲零食商品列表采集并导出 Excel.amphi-workflow>)
+<!-- 写成 HTML 而非 markdown 链接的原因见 project-management-automation.md 同一处。 -->
+<ul>
+<li><a href="/downloads/tmall-snack-scraper.amphi-workflow" download>天猫超市休闲零食商品列表采集并导出 Excel</a></li>
+</ul>
 
 **注意**：由于每个人的电脑桌面运行环境不同，这个工作流未必能在导入后直接运行。仅作为参考，你可以参考它们制作自己真正需要的工作流。
 如果你一定要运行这个工作流，可以在运行碰到问题后，要求Bridgic Agent根据你的实际运行环境修复它即可。

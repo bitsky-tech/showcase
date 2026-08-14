@@ -17,8 +17,13 @@
 ![工作流截图workflow-card-2.webp](./pma-images/workflow-card-2.webp)
 
 本教程产出的这两个自动化工作流，可直接下载并导入进Bridgic Agent，作为参考：
-- [上报 Bridgic Agent 开发任务](<./downloads/上报 Bridgic Agent 开发任务.amphi-workflow>)
-- [自动化 Bug 分析报告 - BridgicAgent项目](<./downloads/自动化 Bug 分析报告 - BridgicAgent项目.amphi-workflow>)
+<!-- 必须写成 HTML：markdown 链接语法会被 VitePress 的死链检查判死（它把未知扩展名
+     当页面路由解析），而 download 属性也是必需的 —— 服务器认不出 .amphi-workflow，
+     响应头里没有 Content-Type，缺了它浏览器可能直接打开而不是下载。 -->
+<ul>
+<li><a href="/downloads/report-dev-task.amphi-workflow" download>上报 Bridgic Agent 开发任务</a></li>
+<li><a href="/downloads/bug-analysis-report.amphi-workflow" download>自动化 Bug 分析报告 - BridgicAgent项目</a></li>
+</ul>
 
 **注意**：由于每个人的电脑桌面运行环境不同，这两个工作流未必能在导入后直接运行。仅作为参考，你可以参考它们制作自己真正需要的工作流。
 如果你一定要运行这两个工作流，可以在运行碰到问题后，要求Bridgic Agent根据你的实际运行环境修复它们即可。
