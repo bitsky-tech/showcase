@@ -159,6 +159,35 @@ for (const link of configLinks) {
   }
 }
 
+// --- download links in raw HTML point at files that exist -------------------
+// The same blind spot, one step further. A workflow file has to be linked with a
+// raw `<a>` tag: VitePress resolves markdown links against its page routes, and
+// `.amphi-workflow` is not an extension it treats as an asset, so the markdown
+// form is reported as a dead link and fails the build even when the file is
+// right there. Raw HTML sidesteps that check -- and with it, every guarantee it
+// was providing. A typo here would build clean, deploy clean, and 404 on click.
+function checkDownloadLinks(lang: string): number {
+  const dir = join(DOCS, lang, 'workflows')
+  if (!existsSync(dir)) return 0
+  let count = 0
+  for (const name of readdirSync(dir)) {
+    if (!name.endsWith('.md')) continue
+    const source = readFileSync(join(dir, name), 'utf8')
+    for (const m of source.matchAll(/href="(\/downloads\/[^"]+)"/g)) {
+      count++
+      const href = m[1] as string
+      if (!existsSync(join(DOCS, 'public', href.replace(/^\//, '')))) {
+        fail(`${lang}/workflows/${name} links to '${href}', which does not exist under docs/public`)
+      }
+      if (!/download(\s|=|>)/.test(source.slice(m.index ?? 0, (m.index ?? 0) + 200))) {
+        fail(`${lang}/workflows/${name}: '${href}' needs the \`download\` attribute -- the server sends no Content-Type for this extension`)
+      }
+    }
+  }
+  return count
+}
+const downloads = checkDownloadLinks('zh') + checkDownloadLinks('en')
+
 // --- every workflow page is reachable from its own payload ------------------
 // checkEntry already covers the other direction (an entry whose `path` points at
 // nothing). This catches the opposite slip: overwriting an entry when meaning to
@@ -190,5 +219,5 @@ if (errors.length > 0) {
 console.log(
   `check-api: ok -- ${zh.length} zh / ${en.length} en workflows, ` +
     `${zhPages.length} zh / ${enPages.length} en pages all listed, ` +
-    `${seenLinks.size} config links resolve`,
+    `${seenLinks.size} config links resolve, ${downloads} download links resolve`,
 )

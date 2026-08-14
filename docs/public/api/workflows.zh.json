@@ -12,7 +12,7 @@
     {
       "id": "e-commerce-product-scraper",
       "name": "天猫超市商品抓取教程",
-      "desc": "演示从天猫超市抓取某一类商品信息并自动化下载商品图片",
+      "desc": "演示从天猫超市抓取某一类商品信息、自动化下载商品图片并批量存入excel文件中",
       "domain": "浏览器自动化",
       "status": "verified",
       "path": "zh/workflows/e-commerce-product-scraper"

@@ -56,6 +56,38 @@ renders it so you can preview, `bun run build` drops it, and `check:api` does no
 ask for a payload entry. The reverse is enforced too: an entry may not point at a
 draft, since that would be a card leading to a 404. Rename when it is ready.
 
+## Offering a file for download
+
+For anything the reader downloads rather than views — an exported
+`.amphi-workflow`, a sample dataset — follow this exactly. The obvious way does
+not work, and fails in a way that is easy to misread:
+
+1. Put the file in `docs/public/downloads/`, with an **ASCII name**.
+2. Link it with a raw `<a>` tag and the `download` attribute:
+   ```html
+   <a href="/downloads/report-dev-task.amphi-workflow" download>上报开发任务</a>
+   ```
+3. `bun run check:api`
+
+Why each part, since none of it is guessable:
+
+- **`docs/public/`** is copied to the site root untouched. Under `docs/` the file
+  goes through the asset pipeline, which only recognises extensions it knows.
+- **Raw `<a>`, not `[text](link)`** — VitePress resolves a markdown link against
+  its *page routes* unless the extension is a known asset type. An unknown one is
+  read as a route, matches no page, and `ignoreDeadLinks: false` fails the build
+  **even though the file is right there**. The error says "dead link", which reads
+  like the file is missing; it is not.
+- **`download`** — the server recognises no extension here and sends an empty
+  `Content-Type`, so without it a browser may render the bytes instead of saving
+  a file.
+- **ASCII name** — a name with spaces or CJK does resolve once encoded, but the
+  emitted `href` carries the raw characters, and an unencoded request 404s.
+
+Raw HTML buys its way past the dead-link check, so `check:api` re-imposes it:
+every `href="/downloads/..."` must exist under `docs/public` and carry
+`download`. Otherwise a typo would build clean, deploy clean, and 404 on click.
+
 ## Bilingual contract
 
 Both languages sit under a prefix (`/zh/`, `/en/`) rather than one at the root, so

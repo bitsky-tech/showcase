@@ -16,6 +16,18 @@
 
 ![工作流截图workflow-card-2.webp](./pma-images/workflow-card-2.webp)
 
+本教程产出的这两个自动化工作流，可直接下载并导入进Bridgic Agent，作为参考：
+<!-- 必须写成 HTML：markdown 链接语法会被 VitePress 的死链检查判死（它把未知扩展名
+     当页面路由解析），而 download 属性也是必需的 —— 服务器认不出 .amphi-workflow，
+     响应头里没有 Content-Type，缺了它浏览器可能直接打开而不是下载。 -->
+<ul>
+<li><a href="/downloads/report-dev-task.amphi-workflow" download>上报 Bridgic Agent 开发任务</a></li>
+<li><a href="/downloads/bug-analysis-report.amphi-workflow" download>自动化 Bug 分析报告 - BridgicAgent项目</a></li>
+</ul>
+
+**注意**：由于每个人的电脑桌面运行环境不同，这两个工作流未必能在导入后直接运行。仅作为参考，你可以参考它们制作自己真正需要的工作流。
+如果你一定要运行这两个工作流，可以在运行碰到问题后，要求Bridgic Agent根据你的实际运行环境修复它们即可。
+
 还有一个定时调度任务：
 
 ![工作流截图scheduled-success-result.webp](./pma-images/scheduled-success-result.webp)
@@ -32,7 +44,9 @@
 
 ### 准备工作
 
-准备你自己的飞书账号，创建一个多维表格出来，用来保存和展示开发任务（新特性开发或Bug记录）。如下：
+准备你自己的飞书账号，创建一个多维表格出来，用来保存和展示开发任务（新特性开发或Bug记录）。
+
+注：创建多维表格其实也可以让Bridgic Agent来做，当因为初次连接飞书表格可能会有些麻烦，并且这是个一次性的操作，这里建议先用手工创建这个多维表格。如下：
 
 ![工作流截图table-creation.webp](./pma-images/table-creation.webp)
 
@@ -187,7 +201,7 @@ Bridgic Agent提示你选择任务的验收标准：
 
 ## 注意事项
 
-- 用户本地的环境不同，构建过程可能也会碰到很多差异。可能需要根据具体情况来合理处理。尤其是这个工作流底层需要的lark-cli的安装和配置过程，具体的过程体验取决于环境和模型能力。建议使用好模型来构建工作流，然后可以使用次一些的模型来运行它。
+- 由于电脑本地的执行环境不同，你的构建过程可能也会碰到很多差异，未必跟以上记录的过程完全相同。你需要根据具体情况来合理处理，尤其是这个工作流底层需要的lark-cli的安装和配置过程，其具体的过程体验取决于环境和模型能力。建议使用好的模型来构建工作流，然后可以使用次一级的模型来运行它。
 - 构建过程中如果发生意外情况，不要慌张，可以随时向agent提问，请它提供更多信息或者让它给建议。在中间过程可以把碰到的问题/疑问都抛给Bridgic Agent。
 - Bridgic Agent对于工作流的构建，成功率非常高。只要需求描述清晰且可行，通常能够一次性成功。但偶尔出现失败的情况，也不要紧，可以让Bridgic Agent修复工作流。修复时告诉它你碰到的异常情况。
-- 工作流构建出来之后，并非一成不变，Bridgic Agent提供了强大的工作流修改能力。如果你需求有所变动，随时告诉Bridgic Agent：“修复 @XXX工作流，我要XXXX”。
+- 工作流构建出来之后，并非一成不变，Bridgic Agent提供了强大的工作流修改能力。如果你需求有所变动，随时告诉Bridgic Agent：“修改 @XXX工作流，我要XXXX”。你可以不断优化自己的工作流，让它越来越精细，也越来越贴近你的需求。
