@@ -1,6 +1,6 @@
 # 【教程】自动采集天猫超市商品信息 (WIP)
 
-本教程介绍如何使用Bridgic Agent构建自动化工作流，从天猫超市抓取某一类的商品信息，包括自动化获取商品图片。
+本教程介绍如何使用Bridgic Agent构建自动化工作流，从天猫超市抓取某一类的商品信息（包括自动化获取商品图片），批量存入excel文件中。
 本教程详细记录了该工作流的构建过程和运行过程。
 
 ## 成品展示
@@ -27,6 +27,8 @@ Bridgic Agent对于需求中不明确的描述会主动和你确认（需求澄�
 ![工作流截图clarify-2.webp](./e-commerce-images/clarify-2.webp)
 
 ![工作流截图clarify-3.webp](./e-commerce-images/clarify-3.webp)
+
+![工作流截图clarify-4.webp](./e-commerce-images/clarify-4.webp)
 
 Bridgic Agent会提示你选择或确认任务的验收标准：
 
@@ -56,15 +58,50 @@ Bridgic Agent发现天猫超市需要用户登录，所以弹框告知用户来�
 
 ![工作流截图login-submit.webp](./e-commerce-images/login-submit.webp)
 
+Bridgic Agent在运行过程中又发现了一个需求澄清的点：
+
+![工作流截图clarify-5.webp](./e-commerce-images/clarify-5.webp)
+
+需求澄清后，Bridgic Agent会引导你第二次确认任务说明书的变动：
+
+![工作流截图task-req-second.webp](./e-commerce-images/task-req-second.webp)
+
+构建工作流的最后一步：给工作流取个名字。
+
+![工作流截图workflow-naming.webp](./e-commerce-images/workflow-naming.webp)
+
+工作流创建成功！
+
+![工作流截图workflow-created.webp](./e-commerce-images/workflow-created.webp)
+
+这个新创建的工作流，以后你随时可以在工作流页面中找到它。工作流卡片如下：
+
+![工作流截图workflow-card.webp](./e-commerce-images/workflow-card.webp)
+
 
 ### 运行工作流
 
+![工作流截图running-1.webp](./e-commerce-images/running-1.webp)
+
+![工作流截图running-success.webp](./e-commerce-images/running-success.webp)
+
+点击“查看结果”，可以看到刚才工作流的运行结果：
+
+![工作流截图running-result.webp](./e-commerce-images/running-result.webp)
+
+可以把最后的excel表格下载出来，里面存放着从天猫超市采集到的50个商品信息：
+
+![工作流截图running-excel.webp](./e-commerce-images/running-excel.webp)
 
 ### 调度工作流
 
-
-
+如果需要定期采集，可以使用Bridgic Agent提供的“调度”功能，来设置定时执行。此处略。
 
 ## 注意事项
 
 修改工作流
+
+- 由于电脑本地的执行环境不同，你的构建过程可能也会碰到很多差异，未必跟以上记录的过程完全相同。具体的过程体验取决于环境和模型能力；建议使用好的模型来构建工作流，然后可以使用次一级的模型来运行它。
+- 构建过程中如果发生意外情况，不要慌张，可以随时向agent提问，请它提供更多信息或者让它给建议。在中间过程可以把碰到的问题/疑问都抛给Bridgic Agent。
+- Bridgic Agent对于工作流的构建，成功率非常高。只要需求描述清晰且可行，通常能够一次性成功。但偶尔出现失败的情况，也不要紧，可以让Bridgic Agent修复工作流。修复时告诉它你碰到的异常情况。
+- 工作流构建出来之后，并非一成不变，Bridgic Agent提供了强大的工作流修改能力。如果你需求有所变动，随时告诉Bridgic Agent：“修改 @XXX工作流，我要XXXX”。你可以不断优化自己的工作流，让它越来越精细，也越来越贴近你的需求。
