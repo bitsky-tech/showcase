@@ -7,8 +7,8 @@ lastUpdated: false
 ---
 
 <div class="wf-hero">
-  <h1 class="brand-gradient-text">工作流市场</h1>
-  <p>把重复的操作交给 Agent。每个工作流都可以直接在 Bridgic 桌面端导入运行。</p>
+  <h1 class="brand-gradient-text">工作流教程</h1>
+  <p>在Bridgic Agent的引导下，人人都可以把自己的日常工作流自动化。</p>
 </div>
 
 <WorkflowGrid />
