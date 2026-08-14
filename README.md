@@ -12,10 +12,14 @@ so a card and a client can never disagree about what exists.
 
 ```bash
 bun install
-bun run dev        # http://localhost:5173  (add --host to expose on the LAN)
+bun run dev        # http://localhost:5273  (add --host to expose on the LAN)
 bun run build
-bun run preview    # serves the built site on :4173
+bun run preview    # serves the built site on :4273
 ```
+
+Both ports are set explicitly in `package.json`, off Vite's defaults (5173 /
+4173) so a stray dev server from another project cannot answer — or be answered
+by — these.
 
 ## Layout
 

@@ -14,7 +14,7 @@
  *   - the workflow cards render and stay inside the container
  *   - no console errors
  *
- * Run: bun run check:responsive   (needs `bun run preview` on :4173)
+ * Run: bun run check:responsive   (needs `bun run preview` on :4273)
  */
 
 import { readFileSync, readdirSync } from 'node:fs'
@@ -28,7 +28,7 @@ import { chromium, type Browser, type Page } from 'playwright'
 import en from '../docs/public/api/workflows.en.json'
 import zh from '../docs/public/api/workflows.zh.json'
 
-const BASE = process.env.CHECK_BASE ?? 'http://127.0.0.1:4173'
+const BASE = process.env.CHECK_BASE ?? 'http://127.0.0.1:4273'
 const DOCS = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'docs')
 
 /**

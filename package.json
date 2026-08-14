@@ -5,9 +5,9 @@
   "type": "module",
   "description": "Workflow showcase and data API for bridgic clients, served from showcase.bridgic.ai",
   "scripts": {
-    "dev": "vitepress dev docs",
+    "dev": "vitepress dev docs --port 5273",
     "build": "vitepress build docs",
-    "preview": "vitepress preview docs",
+    "preview": "vitepress preview docs --port 4273",
     "check:api": "bun run scripts/check-api.ts",
     "check:responsive": "bun run scripts/check-responsive.ts"
   },
