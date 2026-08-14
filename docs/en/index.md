@@ -7,7 +7,7 @@ lastUpdated: false
 ---
 
 <div class="wf-hero">
-  <h1 class="brand-gradient-text">Workflow marketplace</h1>
+  <h1 class="brand-gradient-text">Workflow Tutorials</h1>
   <p>Hand repetitive work to an agent. Every workflow here can be imported straight into the Bridgic desktop app.</p>
 </div>
 
