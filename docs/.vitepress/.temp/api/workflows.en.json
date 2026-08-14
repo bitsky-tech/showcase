@@ -1,0 +1,71 @@
+{
+  "lang": "en",
+  "workflows": [
+    {
+      "id": "project-management-automation",
+      "name": "Feishu Bitable project management tutorial",
+      "desc": "A practical example of automating software project management with Feishu Bitable: agents can report bugs, scheduled runs can scan and analyze them, and sub-agents can be split out automatically.",
+      "domain": "IT systems integration",
+      "status": "verified",
+      "path": "en/workflows/project-management-automation",
+      "goal": "Automate and streamline long-running project-management work",
+      "requirement": "A Feishu account and an application created in the Feishu Open Platform",
+      "output": "Task records stored in Feishu Bitable and a bug analysis report"
+    },
+    {
+      "id": "e-commerce-product-scraper",
+      "name": "Tmall Supermarket product scraper tutorial",
+      "desc": "Demonstrates how to scrape product information from a Tmall Supermarket category and automatically download product images.",
+      "domain": "Browser automation",
+      "status": "verified",
+      "path": "en/workflows/e-commerce-product-scraper",
+      "goal": "Automatically retrieve product information for a specified Tmall Supermarket search term",
+      "requirement": "A Tmall Supermarket account for signing in",
+      "output": "An Excel spreadsheet containing product information"
+    },
+    {
+      "id": "priceMonitor",
+      "name": "Competitor price monitor",
+      "desc": "Monitor competitor-site prices and send alerts when they change",
+      "domain": "Browser automation",
+      "status": "verified",
+      "path": "en/workflows/price-monitor",
+      "goal": "Notice a competitor price change as soon as it happens",
+      "requirement": "A list of product URLs; a price selector where the markup is unusual",
+      "output": "Alerts past the threshold, plus snapshots that keep the trend auditable"
+    },
+    {
+      "id": "githubIssues",
+      "name": "GitHub Issue analysis",
+      "desc": "Analyze repository Issue trends and produce a weekly report",
+      "domain": "API integration",
+      "status": "new",
+      "path": "en/workflows/github-issues",
+      "goal": "See where the week’s problems cluster and which class is spiking",
+      "requirement": "A list of repositories; a GitHub token with read access",
+      "output": "A weekly report with opened/closed/stale counts and trend outliers"
+    },
+    {
+      "id": "pdfExtract",
+      "name": "PDF batch extractor",
+      "desc": "Extract structured data from multiple PDFs into Excel",
+      "domain": "File processing",
+      "status": "verified",
+      "path": "en/workflows/pdf-extract",
+      "goal": "Turn a batch of fixed-layout documents into a table you can analyse",
+      "requirement": "An input directory; a field template of keyword anchors and offsets",
+      "output": "One Excel row per document, with failed validations flagged for review"
+    },
+    {
+      "id": "mailReply",
+      "name": "Automatic email replies",
+      "desc": "Automatically classify and reply to common emails based on rules",
+      "domain": "Email integration",
+      "status": "new",
+      "path": "en/workflows/mail-reply",
+      "goal": "Stop repetitive email questions from consuming human time",
+      "requirement": "An intent-to-template mapping; sender domains cleared for auto-send",
+      "output": "A sent reply or a draft awaiting review, with the decision recorded"
+    }
+  ]
+}

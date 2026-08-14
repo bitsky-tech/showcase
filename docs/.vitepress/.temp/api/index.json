@@ -1,0 +1,8 @@
+{
+  "endpoints": {
+    "workflows": {
+      "zh": "api/workflows.zh.json",
+      "en": "api/workflows.en.json"
+    }
+  }
+}
