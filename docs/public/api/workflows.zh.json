@@ -28,7 +28,7 @@
     {
       "id": "courseware-development",
       "name": "基于教材批量制作课件",
-      "desc": "演示根据指定的PDF教材，批量为每个课程单元生成课件PPT、教学设计表格和学习任务单。",
+      "desc": "演示根据指定的PDF教材，批量为每个课程单元生成课件PPT、教学设计表格和学习任务单。还演示了批量启动子agent的两种方式。",
       "domain": "报告生成",
       "status": "verified",
       "path": "zh/workflows/courseware-development"
