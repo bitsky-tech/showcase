@@ -3,7 +3,7 @@
   "workflows": [
     {
       "id": "project-management-automation",
-      "name": "飞书表格项目管理教程",
+      "name": "飞书表格+项目管理自动化",
       "desc": "演示基于飞书多维表格自动化管理“软件项目”的一个案例，可以通过agent上报bug，也支持自动扫描分析bug。还演示了自动拆分子agent的能力。",
       "domain": "IT系统集成",
       "status": "verified",
@@ -11,14 +11,14 @@
     },
     {
       "id": "e-commerce-product-scraper",
-      "name": "天猫超市商品抓取教程",
+      "name": "天猫超市商品批量抓取",
       "desc": "演示从天猫超市抓取某一类商品信息、自动化下载商品图片并批量存入excel文件中",
       "domain": "浏览器自动化",
       "status": "verified",
       "path": "zh/workflows/e-commerce-product-scraper"
     },
     {
-      "id": "priceMonitor",
+      "id": "github-trending-tracker",
       "name": "GitHub热门AI项目追踪",
       "desc": "演示每周定时追踪GitHub Trending的周榜和月榜，产生一个热门AI项目分析报告并推送飞书消息。",
       "domain": "爬虫 & IT系统集成",
@@ -26,12 +26,12 @@
       "path": "zh/workflows/github-trending-tracker"
     },
     {
-      "id": "githubIssues",
-      "name": "GitHub Issue 分析",
-      "desc": "自动分析仓库 Issue 趋势，生成周报",
-      "domain": "API 集成",
-      "status": "new",
-      "path": "zh/workflows/github-issues"
+      "id": "courseware-development",
+      "name": "基于教材批量制作课件",
+      "desc": "演示根据指定的PDF教材，批量为每个课程单元生成课件PPT、教学设计表格和学习任务单。",
+      "domain": "报告生成",
+      "status": "verified",
+      "path": "zh/workflows/courseware-development"
     },
     {
       "id": "pdfExtract",
