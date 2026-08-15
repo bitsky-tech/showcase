@@ -7,7 +7,7 @@
       "desc": "A case study in automating software-project management with Lark Bitable: agents can report bugs and automatically scan and analyze them. It also demonstrates automatic subagent delegation.",
       "domain": "IT Systems Integration",
       "status": "verified",
-      "path": "zh/workflows/project-management-automation"
+      "path": "en/workflows/project-management-automation"
     },
     {
       "id": "e-commerce-product-scraper",
@@ -15,7 +15,7 @@
       "desc": "Demonstrates scraping information for a product category from Tmall Supermarket, automatically downloading product images, and saving the results to an Excel file in bulk.",
       "domain": "Browser Automation",
       "status": "verified",
-      "path": "zh/workflows/e-commerce-product-scraper"
+      "path": "en/workflows/e-commerce-product-scraper"
     },
     {
       "id": "github-trending-tracker",
@@ -23,7 +23,7 @@
       "desc": "Demonstrates weekly scheduled tracking of GitHub Trending's weekly and monthly rankings, generating an analysis report on popular AI projects, and sending a Lark message.",
       "domain": "Web Scraping & IT Systems Integration",
       "status": "verified",
-      "path": "zh/workflows/github-trending-tracker"
+      "path": "en/workflows/github-trending-tracker"
     },
     {
       "id": "courseware-development",
@@ -31,7 +31,7 @@
       "desc": "Demonstrates using a specified PDF textbook to batch-generate presentation slides, instructional-design tables, and learning task sheets for each course unit. It also demonstrates two methods for batch launching subagents.",
       "domain": "Report Generation",
       "status": "verified",
-      "path": "zh/workflows/courseware-development"
+      "path": "en/workflows/courseware-development"
     }
   ]
 }
