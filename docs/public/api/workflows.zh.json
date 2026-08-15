@@ -32,22 +32,6 @@
       "domain": "报告生成",
       "status": "verified",
       "path": "zh/workflows/courseware-development"
-    },
-    {
-      "id": "pdfExtract",
-      "name": "PDF 批量提取器",
-      "desc": "从多个 PDF 中提取结构化数据到 Excel",
-      "domain": "文件处理",
-      "status": "verified",
-      "path": "zh/workflows/pdf-extract"
-    },
-    {
-      "id": "mailReply",
-      "name": "邮件自动回复",
-      "desc": "根据规则自动分类和回复常见邮件",
-      "domain": "邮件集成",
-      "status": "new",
-      "path": "zh/workflows/mail-reply"
     }
   ]
 }
