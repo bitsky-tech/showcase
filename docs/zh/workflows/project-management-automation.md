@@ -185,7 +185,7 @@ Bridgic Agent提示你选择任务的验收标准：
 
 ![工作流截图scheduled-success-outputs.webp](./pma-images/scheduled-success-outputs.webp)
 
-最后我们会看到飞书上的任务面板中，记录Bug扫描的字段也已经被自动回填：
+最后你会看到飞书上的任务面板中，记录Bug扫描的字段也已经被自动回填：
 
 ![工作流截图scheduled-feishu-writeback.webp](./pma-images/scheduled-feishu-writeback.webp)
 

@@ -19,11 +19,11 @@
     },
     {
       "id": "priceMonitor",
-      "name": "竞品价格监控",
-      "desc": "定时监控竞品网站价格变动并发送告警",
-      "domain": "浏览器自动化",
+      "name": "GitHub热门AI项目追踪",
+      "desc": "演示每周定时追踪GitHub Trending的周榜和月榜，产生一个热门AI项目分析报告并推送飞书消息。",
+      "domain": "爬虫 & IT系统集成",
       "status": "verified",
-      "path": "zh/workflows/price-monitor"
+      "path": "zh/workflows/github-trending-tracker"
     },
     {
       "id": "githubIssues",
