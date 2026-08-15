@@ -51,10 +51,19 @@ Write it in one language and ship it — the other language can follow later, or
 never. There is no sidebar and no nav entry to maintain: the card grid on the home
 page is the index, and it is driven by the payload.
 
+**The payload decides what the home page lists; the page decides what has a URL.**
+A page with no entry is published and reachable, it just carries no card. Nothing
+complains about it.
+
+**Retiring a workflow: drop the entry, keep the page.** Never delete the `.md`.
+The desktop app caches the payload for six hours — longer if it cannot reach the
+network — so cards fetched this morning are still being clicked, and their `path`
+has to keep resolving. Deleting the page turns those clicks into a 404 inside the
+app's preview dialog.
+
 **Drafts.** Name the file `_<slug>.md` while it is unfinished. `bun run dev`
-renders it so you can preview, `bun run build` drops it, and `check:api` does not
-ask for a payload entry. The reverse is enforced too: an entry may not point at a
-draft, since that would be a card leading to a 404. Rename when it is ready.
+renders it so you can preview and `bun run build` drops it. An entry may not point
+at a draft, since that card would 404 on the live site. Rename when it is ready.
 
 ## Offering a file for download
 
