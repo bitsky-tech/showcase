@@ -103,10 +103,9 @@ and always one-way: a typo in that href would now build clean, deploy clean, and
 announced itself. So `check:api` re-imposes the guarantee: every
 `href="/downloads/..."` must exist under `docs/public` and must carry `download`.
 
-**When you route around a check, you inherit its job.** Three of this repo's
-checks now exist for exactly that reason — links hardcoded in `config.ts`, pages
-absent from the payload, and these download links — each one covering a place the
-framework stopped looking.
+**When you route around a check, you inherit its job.** Two of this repo's checks
+exist for exactly that reason — links hardcoded in `config.ts`, and these download
+links — each one covering a place the framework stopped looking.
 
 ## The languages are allowed to diverge
 
@@ -120,18 +119,40 @@ later or never, so the rule blocked correct work — and its failure output buri
 real mistakes in noise. The branch that triggered the change produced four errors,
 two of which were "no English counterpart" for pages nobody had translated yet.
 
-What replaced it is narrower and strictly more useful: **each language is checked
-against its own payload, in both directions.** Every `docs/<lang>/workflows/*.md`
-must have an entry in `workflows.<lang>.json`, and every entry's `path` must point at
-a page that exists. Translation lag cannot trip either one. Run against that same
-branch, the new rule reports two errors instead of four, and both are real: the
-branch had overwritten the `xiaohongshu` and `feishuDaily` entries instead of
-appending, dropping two workflows off the home page. The old symmetry rule caught
-that only by accident.
+What replaced it is narrower: **each language is checked against its own payload,
+in one direction.** Every entry's `path` must point at a page that exists —
+translation lag cannot trip that.
 
 Across languages exactly one rule survives — `status` must agree for an `id` both of
 them carry — because a "verified" badge in one language and not the other is always
 a mistake, never a work-in-progress state.
+
+## A page without a payload entry is a feature
+
+The check briefly ran the other way too: every `docs/<lang>/workflows/*.md` had to
+appear in its language's payload. It was there to catch an entry overwritten in
+place — which does happen — but it made an unrelated and much worse thing
+mandatory. The only way to take a workflow off the home page was to delete its
+page, and **deleting a page breaks clients that are still holding the old
+payload.**
+
+The desktop app caches the payload in `market-cache.json` for six hours, renders
+that copy on launch before deciding whether to fetch, and on a failed fetch keeps
+whatever it has — indefinitely, if the machine is offline. So a card being clicked
+right now may come from a list fetched this morning, and its `path` has to keep
+resolving long after the entry itself is gone. Five URLs were deleted this way
+before anyone noticed; each one answers with the 9 KB HTML 404 that GitHub Pages
+serves, rendered inside the app's preview dialog.
+
+So the rule now is simply: **the payload decides what the home page lists; the
+page decides what has a URL.** Retiring a workflow means dropping its entry and
+leaving the page where it is. The reverse is still enforced, because it is the one
+that actually produces a 404: an entry may not point at a page that does not exist
+(or at a draft, which never gets built).
+
+The cost is real and accepted — an entry overwritten in place now goes unnoticed
+here, and the page it displaced simply stops being listed. That is indistinguishable
+from retiring it on purpose, which is exactly why no check can tell them apart.
 
 The cost is paid at the switcher. `LangSwitch` only rewrites the leading path
 segment, so a page that exists in one language only would point at a 404. Rather

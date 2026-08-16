@@ -8,19 +8,23 @@
  * language is checked against itself, and the pair only where disagreeing is
  * always a mistake:
  *
- *   1. Every workflow page appears in its own language's payload, and every
- *      entry's `path` points at a page that exists. Both directions matter:
- *      overwriting an entry when meaning to append one drops the overwritten
- *      workflow off the home page, and a stale `path` turns a card click into a
- *      404 -- GitHub Pages answers a miss with a 9KB HTML body, so that is easy
- *      to ship unnoticed.
+ *   1. Every entry's `path` points at a page that exists. A stale one turns a
+ *      card click into a 404 -- GitHub Pages answers a miss with a 9KB HTML
+ *      body, so that is easy to ship unnoticed.
  *   2. Letting `status` drift between languages *for an id both of them carry*,
  *      which would show a "verified" badge in Chinese and not in English.
  *
- * A page whose file name starts with `_` is a draft: exempt from (1) in both
- * directions -- it needs no entry, and no entry may point at it. `config.ts`
- * keeps drafts out of `vitepress build`, so an entry pointing at one would be a
- * card leading to a 404 on the live site.
+ * Deliberately NOT checked: the reverse of (1). A page with no payload entry is
+ * a supported state, not a mistake -- the payload decides what the home page
+ * lists, and a page keeps its URL either way. That matters because the desktop
+ * app caches the payload for six hours (longer if it cannot reach the network),
+ * so a card someone clicks may well come from a copy fetched this morning.
+ * Retiring a workflow therefore means dropping its entry and *leaving the page*;
+ * deleting the page is what breaks those clients.
+ *
+ * A page whose file name starts with `_` is a draft, and `config.ts` keeps
+ * drafts out of `vitepress build` -- so an entry may not point at one, or the
+ * card would lead to a 404 on the live site.
  */
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
@@ -188,27 +192,14 @@ function checkDownloadLinks(lang: string): number {
 }
 const downloads = checkDownloadLinks('zh') + checkDownloadLinks('en')
 
-// --- every workflow page is reachable from its own payload ------------------
-// checkEntry already covers the other direction (an entry whose `path` points at
-// nothing). This catches the opposite slip: overwriting an entry when meaning to
-// append one, which leaves the overwritten workflow with a page that no card
-// links to any more. Purely within one language, so translation lag never trips
-// it. `index.md` is the grid itself, not a workflow, and `_*.md` is a draft --
-// unfinished work should not have to be listed to pass the check.
-function checkListed(lang: string, entries: Workflow[]): string[] {
+/** Published pages per language, listed or not -- reported, not enforced. */
+function pageCount(lang: string): number {
   const dir = join(DOCS, lang, 'workflows')
-  if (!existsSync(dir)) return []
-  const listed = new Set(entries.map((e) => e.path))
-  const pages = readdirSync(dir)
-    .filter((name) => name.endsWith('.md') && name !== 'index.md' && !name.startsWith('_'))
-    .map((name) => `${lang}/workflows/${name.slice(0, -'.md'.length)}`)
-  for (const page of pages) {
-    if (!listed.has(page)) fail(`docs/${page}.md has no entry in workflows.${lang}.json`)
-  }
-  return pages
+  if (!existsSync(dir)) return 0
+  return readdirSync(dir).filter(
+    (name) => name.endsWith('.md') && name !== 'index.md' && !name.startsWith('_'),
+  ).length
 }
-const zhPages = checkListed('zh', zh)
-const enPages = checkListed('en', en)
 
 // --- report ----------------------------------------------------------------
 if (errors.length > 0) {
@@ -217,7 +208,7 @@ if (errors.length > 0) {
   process.exit(1)
 }
 console.log(
-  `check-api: ok -- ${zh.length} zh / ${en.length} en workflows, ` +
-    `${zhPages.length} zh / ${enPages.length} en pages all listed, ` +
+  `check-api: ok -- ${zh.length} zh / ${en.length} en workflows listed ` +
+    `out of ${pageCount('zh')} zh / ${pageCount('en')} en pages, ` +
     `${seenLinks.size} config links resolve, ${downloads} download links resolve`,
 )
