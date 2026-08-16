@@ -52,6 +52,8 @@
 
 ![工作流截图new-task.webp](../../zh/workflows/courseware-development/new-task.webp)
 
+注：如果你是一次性地制作课件，也可以不使用“/build”命令，而是直接输入你的任务描述去执行。但是，使用“/build”构建工作流的方式有很多好处，它允许你在跑出第一版结果之后，能够继续反馈不断细化、优化这个工作流，最终达到自己满意的程度。
+
 Bridgic Agent对于需求中不明确的描述会主动和你确认（需求澄清）：
 
 ![工作流截图clarify-1.webp](../../zh/workflows/courseware-development/clarify-1.webp)
