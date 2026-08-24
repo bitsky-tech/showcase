@@ -2,6 +2,14 @@
   "lang": "zh",
   "workflows": [
     {
+      "id": "ai-trending-brief",
+      "name": "自动化AI简报每周自动推送",
+      "desc": "演示AI自动搜索新闻、过滤AI相关内容，分类整理成报告，存储到飞书云文档中，并推送到飞书消息中。",
+      "domain": "爬虫 & IT系统集成",
+      "status": "verified",
+      "path": "zh/workflows/ai-trending-brief"
+    },
+    {
       "id": "project-management-automation",
       "name": "飞书表格+项目管理自动化",
       "desc": "演示基于飞书多维表格自动化管理“软件项目”的一个案例，可以通过agent上报bug，也支持自动扫描分析bug。还演示了自动拆分子agent的能力。",
