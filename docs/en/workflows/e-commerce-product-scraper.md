@@ -1,123 +1,38 @@
-# 【教程】自动采集天猫超市商品信息
+# [Tutorial] Automatically Collect Amazon Product Information
 
-本教程介绍如何使用Bridgic Agent构建自动化工作流，从天猫超市抓取某一类的商品信息（包括自动化获取商品图片），批量存入excel文件中。
-本教程详细记录了该工作流的构建过程和运行过程。
+This tutorial shows you how to use Bridgic Agent to build an automated workflow that collects products matching the search term "snack variety pack" from Amazon. The workflow retrieves product details and images, then saves the results to an Excel file in bulk. You can modify the workflow at any time to change the search term, collected fields, or number of products.
 
-下面我们马上开始探索之旅！在这个过程中，你无需关注任何一行底层代码。
+Let's get started. You will not need to work with any of the underlying code.
 
-## 成品展示
+## What You'll Build
 
-在本教程结束后，你将会看到一个成功构建的工作流：
+By the end of this tutorial, you will have a working, reusable workflow that collects Amazon product information and exports it to Excel.
 
-![工作流截图workflow-card.webp](../../zh/workflows/e-commerce-images/workflow-card.webp)
+![workflow screenshot workflow-card.webp](./e-commerce-images/workflow-card.webp)
 
-该工作流可直接下载并导入进你的Bridgic Agent，作为参考：
-<!-- 写成 HTML 而非 markdown 链接的原因见 project-management-automation.md 同一处。 -->
+You can download this workflow and import it into Bridgic Agent as a reference:
+<!-- This uses HTML instead of a Markdown link for the reason documented in project-management-automation.md. -->
 <ul>
-<li><a href="/downloads/tmall-snack-scraper.amphi-workflow" download>天猫超市休闲零食商品列表采集并导出 Excel</a></li>
+<li><a href="/downloads/en/amazon-newest-arrivals-snack-variety-pack-export.amphi-workflow" download>Amazon newest-arrivals snack variety pack export</a></li>
 </ul>
 
-**注意**：由于每个人的电脑桌面运行环境不同，这个工作流未必能在导入后直接运行。仅作为参考，你可以参考它们制作自己真正需要的工作流。
-如果你一定要运行这个工作流，可以在运行碰到问题后，要求Bridgic Agent根据你的实际运行环境修复它即可。
+**Note:** Because desktop environments differ, the imported workflow may not run successfully without adjustments. Use it as a reference when creating a workflow that fits your environment. If you want to run it directly and encounter an issue, ask Bridgic Agent to adapt it to your environment.
 
-你还会看到，运行该工作后产出的excel文件（里面存放着从天猫超市采集到的商品信息列表）：
+## Build and Run the Workflow
 
-![工作流截图running-excel.webp](../../zh/workflows/e-commerce-images/running-excel.webp)
+Start workflow creation with the `/build` command. Describe the task clearly: search Amazon for "snack variety pack," collect the required number of products and their images, and export the results to Excel.
 
-## 工作流构建教程
+Bridgic Agent will clarify any ambiguous requirements and ask you to confirm the task specification. Review it carefully before continuing.
 
-### 准备工作
+<EmbedVideo yt="vCxgDSk4xA0" />
 
-请提前准备好你在天猫超市的账号，用于帮助agent登录。
+### Schedule the Workflow
 
-### 构建可复用的工作流
+To collect updated product information regularly, use Bridgic Agent's scheduling feature to configure recurring runs.
 
-本节会引导你创建出一个可复用（可重跑）的自动化工作流。
+## Notes
 
-使用“/build”命令开始工作流创建。简洁、准确地描述需求：
-
-![工作流截图new-task.webp](../../zh/workflows/e-commerce-images/new-task.webp)
-
-Bridgic Agent对于需求中不明确的描述会主动和你确认（需求澄清）：
-
-![工作流截图clarify-1.webp](../../zh/workflows/e-commerce-images/clarify-1.webp)
-
-![工作流截图clarify-2.webp](../../zh/workflows/e-commerce-images/clarify-2.webp)
-
-![工作流截图clarify-3.webp](../../zh/workflows/e-commerce-images/clarify-3.webp)
-
-![工作流截图clarify-4.webp](../../zh/workflows/e-commerce-images/clarify-4.webp)
-
-Bridgic Agent会提示你选择或确认任务的验收标准：
-
-![工作流截图check-condition-1.webp](../../zh/workflows/e-commerce-images/check-condition-1.webp)
-
-![工作流截图check-condition-2.webp](../../zh/workflows/e-commerce-images/check-condition-2.webp)
-
-这里来到了很关键的一步：**任务说明书的确认**！你需要仔细阅读这里的描述，确保工作流的描述符合你的需求。如果你发现不符合需求的地方，可以用鼠标选中相应文字并评论它，然后Bridgic Agent会根据你的评论进行相应的修改。
-
-![工作流截图task-req-1.webp](../../zh/workflows/e-commerce-images/task-req-1.webp)
-
-请关注任务说明书中对于“最终交付物”和“验收标准”的描述。
-
-![工作流截图task-req-2.webp](../../zh/workflows/e-commerce-images/task-req-2.webp)
-
-至此任务说明书已经确认。接下来请遵照Bridgic Agent的引导进行操作。
-
-Bridgic Agent发现天猫超市需要用户登录，所以弹框告知用户来处理：
-
-![工作流截图login-prompt.webp](../../zh/workflows/e-commerce-images/login-prompt.webp)
-
-**先不要点击上面这个弹框**。先在右侧浏览器中完成登录（输入账号名和密码，或者用淘宝App扫描二维码）：
-
-![工作流截图login-page.webp](../../zh/workflows/e-commerce-images/login-page.webp)
-
-现在可以回到对话中提交前面的登录提示弹框了！
-
-![工作流截图login-submit.webp](../../zh/workflows/e-commerce-images/login-submit.webp)
-
-Bridgic Agent在运行过程中又发现了一个需求澄清的点：
-
-![工作流截图clarify-5.webp](../../zh/workflows/e-commerce-images/clarify-5.webp)
-
-需求澄清后，Bridgic Agent会引导你第二次确认任务说明书的变动：
-
-![工作流截图task-req-second.webp](../../zh/workflows/e-commerce-images/task-req-second.webp)
-
-构建工作流的最后一步：给工作流取个名字。
-
-![工作流截图workflow-naming.webp](../../zh/workflows/e-commerce-images/workflow-naming.webp)
-
-工作流创建成功！
-
-![工作流截图workflow-created.webp](../../zh/workflows/e-commerce-images/workflow-created.webp)
-
-这个新创建的工作流，以后你随时可以在工作流页面中找到它。工作流卡片如下：
-
-![工作流截图workflow-card.webp](../../zh/workflows/e-commerce-images/workflow-card.webp)
-
-
-### 运行工作流
-
-![工作流截图running-1.webp](../../zh/workflows/e-commerce-images/running-1.webp)
-
-![工作流截图running-success.webp](../../zh/workflows/e-commerce-images/running-success.webp)
-
-点击“查看结果”，可以看到刚才工作流的运行结果：
-
-![工作流截图running-result.webp](../../zh/workflows/e-commerce-images/running-result.webp)
-
-可以把最后的excel表格下载出来，里面存放着从天猫超市采集到的商品信息列表（该示例批次为50个商品）：
-
-![工作流截图running-excel.webp](../../zh/workflows/e-commerce-images/running-excel.webp)
-
-### 调度工作流
-
-如果需要定期采集，可以使用Bridgic Agent提供的“调度”功能，来设置定时执行。此处略。
-
-## 注意事项
-
-- 由于电脑本地的执行环境不同，你的构建过程可能也会碰到很多差异，未必跟以上记录的过程完全相同。具体的过程体验取决于环境和模型能力；建议使用好的模型来构建工作流，然后可以使用次一级的模型来运行它。
-- 工作流构建出来之后，并非一成不变，Bridgic Agent提供了强大的工作流修改能力。如果你需求有所变动，随时告诉Bridgic Agent：“修改 @XXX工作流，我要XXXX”。你可以不断优化自己的工作流，让它越来越精细，也越来越贴近你的需求。
-- Bridgic Agent对于工作流的构建，成功率非常高。只要需求描述清晰且可行，通常能够一次性成功。但偶尔出现失败的情况，也不要紧，可以让Bridgic Agent修复工作流。修复时告诉它你碰到的异常情况。
-- 构建过程中如果发生意外情况，不要慌张，可以随时向agent提问，请它提供更多信息或者让它给建议。在中间过程可以把碰到的问题/疑问都抛给Bridgic Agent。
+- The build process may differ from the one shown here because desktop environments vary. The exact experience also depends on the selected model. A more capable model is recommended for building the workflow; a lighter model can be used for routine runs.
+- Workflows are editable after they are created. If your requirements change, ask Bridgic Agent to update the workflow—for example, to change the search term, product fields, or output format.
+- Bridgic Agent can usually build a workflow successfully when the requirements are clear and feasible. If a build or run fails, describe the issue and ask the agent to repair the workflow.
+- If anything unexpected happens during the build, ask Bridgic Agent for more information or guidance at any time.
