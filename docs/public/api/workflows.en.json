@@ -2,20 +2,20 @@
   "lang": "en",
   "workflows": [
     {
+      "id": "e-commerce-product-scraper",
+      "name": "Amazon Product Batch Scraper",
+      "desc": "Demonstrates scraping information for a product category from Amazon, automatically downloading product images, and saving the results to an Excel file in bulk.",
+      "domain": "Browser Automation",
+      "status": "verified",
+      "path": "en/workflows/e-commerce-product-scraper"
+    },
+    {
       "id": "project-management-automation",
       "name": "Lark Bitable + Project Management Automation (in Chinese)",
       "desc": "A case study in automating software-project management with Lark Bitable: agents can report bugs and automatically scan and analyze them. It also demonstrates automatic subagent delegation.",
       "domain": "IT Systems Integration",
       "status": "verified",
       "path": "en/workflows/project-management-automation"
-    },
-    {
-      "id": "e-commerce-product-scraper",
-      "name": "Tmall Supermarket Product Batch Scraper (in Chinese)",
-      "desc": "Demonstrates scraping information for a product category from Tmall Supermarket, automatically downloading product images, and saving the results to an Excel file in bulk.",
-      "domain": "Browser Automation",
-      "status": "verified",
-      "path": "en/workflows/e-commerce-product-scraper"
     },
     {
       "id": "github-trending-tracker",
